@@ -5,21 +5,22 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
-const { ccclass, property } = cc._decorator;
+const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class Game extends cc.Component {
-    onLoad () {
-        this.enablePhysics();
+export default class Player extends cc.Component {
+
+    // onLoad () {}
+    
+    onBeginContact(){
+        cc.log("begin contact.....");
     }
 
-    enablePhysics() {
-        const physicsManager: cc.PhysicsManager = cc.director.getPhysicsManager();
-        physicsManager.enabled = true;
-        physicsManager.debugDrawFlags = 0;
+    onEndContact(){
+
     }
 
-    start() {
+    start () {
 
     }
 
