@@ -13,12 +13,14 @@ export default class Platform extends cc.Component {
     @property(cc.Prefab)
     platformTile = null;
 
+    _speed: number
     // onLoad () {}
 
     start() {
     }
 
     init(data: PlatformData) {
+        this._speed = data.speed;
         this.node.setPosition(data.x, data.y);
 
         // create tiles
@@ -34,6 +36,8 @@ export default class Platform extends cc.Component {
     }
 
     update(dt) {
-       
+        // this.node.x -= 50 * dt;
+        // this.node.children.forEach((child: cc.Node) => child.getComponent(cc.RigidBody).syncPosition(true))
+        this.node.children.forEach((child: cc.Node) => child.x -= this._speed * dt)
     }
 }

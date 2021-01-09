@@ -61,7 +61,7 @@ export default class Player extends cc.Component {
     }
 
     onEndContact() {
-        this._isGrounded = false
+        // this._isGrounded = false
     }
 
     start() {
@@ -84,6 +84,7 @@ export default class Player extends cc.Component {
             this._isJumping = true;
             //  set hero's speed on Y axis
             this._rigidBody.linearVelocity = this.jumpSpeed;
+            this._isGrounded = false;
             //else if player is jumping and jump is not finished
          } else if (this._isJumping && !this._maxJumpDistanceReached) {
             const jumpDistance = this.node.y - this._startJumpY;

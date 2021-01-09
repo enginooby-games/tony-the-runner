@@ -15,7 +15,9 @@ export default class NewClass extends cc.Component {
     // onLoad () {}
 
     start() {
-        this.createPlatform({ tilesCount: 4, x: 0, y: 0 })
+        this.createPlatform({ tilesCount: 4, speed: 75, x: 0, y: 0 })
+        this.createPlatform({ tilesCount: 3, speed: 75, x: 300, y: -100 })
+
     }
 
     createPlatform(data: PlatformData) {
@@ -26,5 +28,8 @@ export default class NewClass extends cc.Component {
     }
 
     update(dt) {
+         // this.node.x -= 50 * dt;
+        // this.node.children.forEach((child: cc.Node) => child.getComponent(cc.RigidBody).syncPosition(true))
+        this.node.children.forEach((child: cc.Node) => child.x -= 50 * dt)
     }
 }
