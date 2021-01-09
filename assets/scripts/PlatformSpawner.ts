@@ -28,6 +28,7 @@ export default class NewClass extends cc.Component {
     tilesCountMax: number = 5
 
     _currentPlatform: cc.Node = null
+    _platformPool: cc.Node[] = []
 
     onLoad() {
         SCREEN_TOP_Y = cc.winSize.height / 2
@@ -52,8 +53,8 @@ export default class NewClass extends cc.Component {
         const xOffset: number = this.xOffsetMin + Math.random() * (this.xOffsetMax - this.xOffsetMin)
         const yOffset: number = this.yOffsetMin + Math.random() * (this.yOffsetMax - this.yOffsetMin)
 
-        let tempY: number = this._currentPlatform.y + yOffset + 150
-        tempY = Math.min(tempY, SCREEN_TOP_Y)
+        let tempY: number = this._currentPlatform.y + yOffset
+        tempY = Math.min(tempY, SCREEN_TOP_Y - 64)
         tempY = Math.max(tempY, SCREEN_BOTTOM_Y + 64 / 2)
 
         // data.x = this._currentPlatform.node.x + xOffset
@@ -66,11 +67,18 @@ export default class NewClass extends cc.Component {
     }
 
     createPlatform(data?: PlatformData) {
-        this._currentPlatform = cc.instantiate(this.platform);
-        this.node.addChild(this._currentPlatform)
+        const lastInactivePlatform: cc.Node = this._platformPool.find((thePlatform: cc.Node) => !thePlatform.getComponent(Platform.name)._active)
+
+        if (lastInactivePlatform) {
+            this._currentPlatform = lastInactivePlatform;
+        } else {
+            this._currentPlatform = cc.instantiate(this.platform);
+            this.node.addChild(this._currentPlatform)
+            this._platformPool.push(this._currentPlatform)
+        }
+
         const platformComponent = this._currentPlatform.getComponent(Platform.name);
         platformComponent.init(this.generateRandomPlatformData());
-
     }
 
     update(dt) {
@@ -78,7 +86,7 @@ export default class NewClass extends cc.Component {
 
         const currentPlatformRightX = this._currentPlatform.x + this._currentPlatform.width
 
-        // create new platform when the lasted generated flatform is fully visuable on the screen
+        // create new platform when the lasted generated flatform is fully visible on the screen
         if (currentPlatformRightX < SCREEN_RIGHT_X) {
             this.createPlatform()
         }

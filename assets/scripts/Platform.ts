@@ -14,6 +14,7 @@ export default class Platform extends cc.Component {
     platformTile = null;
 
     _speed: number
+    _active: boolean // whether visible on the screen
     // onLoad () {}
 
     start() {
@@ -21,7 +22,10 @@ export default class Platform extends cc.Component {
 
     init(data: PlatformData) {
         this._speed = data.speed;
+        this._active = true;
+        this.node.removeAllChildren()
         this.node.setPosition(data.x, data.y);
+        
 
         // create tiles
         for (let i = 0; i < data.tilesCount; i++) {
@@ -39,5 +43,8 @@ export default class Platform extends cc.Component {
         // this.node.x -= 50 * dt;
         // this.node.children.forEach((child: cc.Node) => child.getComponent(cc.RigidBody).syncPosition(true))
         this.node.children.forEach((child: cc.Node) => child.x -= this._speed * dt)
+        if (this.node.x < 0 - this.node.width) {
+            this._active = false
+        }
     }
 }
