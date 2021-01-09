@@ -67,7 +67,8 @@ export default class NewClass extends cc.Component {
     }
 
     createPlatform(data?: PlatformData) {
-        const lastInactivePlatform: cc.Node = this._platformPool.find((thePlatform: cc.Node) => !thePlatform.getComponent(Platform.name)._active)
+        const lastInactivePlatform: cc.Node = this._platformPool.find(
+            (thePlatform: cc.Node) => !(thePlatform.getComponent("Platform") as Platform)._active)
 
         if (lastInactivePlatform) {
             this._currentPlatform = lastInactivePlatform;
@@ -77,7 +78,7 @@ export default class NewClass extends cc.Component {
             this._platformPool.push(this._currentPlatform)
         }
 
-        const platformComponent = this._currentPlatform.getComponent(Platform.name);
+        const platformComponent = this._currentPlatform.getComponent("Platform");
         platformComponent.init(this.generateRandomPlatformData());
     }
 
