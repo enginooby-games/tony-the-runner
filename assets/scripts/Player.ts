@@ -13,7 +13,11 @@ export default class Player extends cc.Component {
     jumpSpeed: cc.Vec2 = new cc.Vec2(0, 300)
     @property
     maxJumpDistance: number = 300
+    @property(cc.SpriteFrame)
+    jumpSprite: cc.SpriteFrame = null
 
+    _animation: cc.Animation
+    _sprite: cc.Sprite
     _rigidBody: cc.RigidBody
     _jumpKeyPressing: boolean = false
     _isJumping: boolean = false
@@ -22,6 +26,8 @@ export default class Player extends cc.Component {
     _startJumpY: number
 
     onLoad() {
+        this._animation = this.getComponent(cc.Animation)
+        this._sprite = this.getComponent(cc.Sprite)
         this._rigidBody = this.getComponent(cc.RigidBody)
 
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this)
@@ -65,7 +71,7 @@ export default class Player extends cc.Component {
     }
 
     onCollisionEnter(other: cc.Collider, self: cc.Collider) {
-        if(other.node.name === 'Diamond') {
+        if (other.node.name === 'Diamond') {
             other.node.destroy()
             this.node.emit('score')
         }
@@ -75,10 +81,26 @@ export default class Player extends cc.Component {
 
     }
 
+    animate() {
+        if (this._isGrounded) {
+            if (!this._animation.getAnimationState('Player@walking').isPlaying) {
+                this._animation.play('Player@walking')
+            }
+        } else {
+            if (this._animation.getAnimationState('Player@walking').isPlaying) {
+                this._animation.stop()
+            }
+
+            this._sprite.spriteFrame = this.jumpSprite
+        }
+    }
+
     update(dt) {
         if (this._jumpKeyPressing) {
             this.jump();
         }
+
+        this.animate()
     }
 
     jump() {
