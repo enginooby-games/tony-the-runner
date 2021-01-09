@@ -74,8 +74,8 @@ export default class Player extends cc.Component {
     }
 
     jump() {
-         //if player is touching the ground
-         if (this._isGrounded) {
+        //if player is touching the ground
+        if (this._isGrounded) {
             //  remember hero's start position
             this._startJumpY = this.node.y;
             //  set jump is not finished
@@ -86,10 +86,10 @@ export default class Player extends cc.Component {
             this._rigidBody.linearVelocity = this.jumpSpeed;
             this._isGrounded = false;
             //else if player is jumping and jump is not finished
-         } else if (this._isJumping && !this._maxJumpDistanceReached) {
+        } else if (this._isJumping && !this._maxJumpDistanceReached) {
             const jumpDistance = this.node.y - this._startJumpY;
             //  if jump distance is not maximum
-            if (jumpDistance < this.maxJumpDistance) {
+            if (jumpDistance < this.maxJumpDistance && this.node.y < cc.winSize.height / 2 - this.node.height * 2.5) {
                 //  keep player's Y speed
                 this._rigidBody.linearVelocity = this.jumpSpeed;
             } else {
