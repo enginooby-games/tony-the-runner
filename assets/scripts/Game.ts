@@ -14,10 +14,19 @@ export default class Game extends cc.Component {
     player = null
     @property(cc.Label)
     scoreLabel: cc.Label = null
+    @property(cc.AudioClip)
+    backgroundMusic: cc.AudioClip = null
+    @property(cc.AudioClip)
+    diamondSfx: cc.AudioClip = null
 
     onLoad() {
+        if (!cc.audioEngine.isMusicPlaying()) {
+            cc.audioEngine.playMusic(this.backgroundMusic, true)
+        }
+
         this.enablePhysics();
         this.player.on('score', () => {
+            cc.audioEngine.play(this.diamondSfx, false, 1)
             this.scoreLabel.string = (++Globals.score).toString()
         })
         this.player.once('die', () => {
