@@ -66,7 +66,8 @@ export default class Player extends cc.Component {
 
     onCollisionEnter(other: cc.Collider, self: cc.Collider) {
         if(other.node.name === 'Diamond') {
-            other.node.destroy();
+            other.node.destroy()
+            this.node.emit('score')
         }
     }
 

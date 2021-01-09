@@ -5,12 +5,21 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import { Globals } from './Globals'
 const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class Game extends cc.Component {
+    @property(cc.Node)
+    player = null
+    @property(cc.Label)
+    scoreLabel: cc.Label = null
+
     onLoad() {
         this.enablePhysics();
+        this.player.on('score', () => {
+            this.scoreLabel.string = (++Globals.score).toString()
+        })
     }
 
     enablePhysics() {
@@ -18,9 +27,9 @@ export default class Game extends cc.Component {
         physicsManager.enabled = true;
         physicsManager.debugDrawFlags = 0;
 
-        cc.director.getCollisionManager().enabledDebugDraw = true;
         cc.director.getCollisionManager().enabled = true;
-        cc.director.getCollisionManager().enabledDrawBoundingBox = true;
+        cc.director.getCollisionManager().enabledDebugDraw = false;
+        cc.director.getCollisionManager().enabledDrawBoundingBox = false;
     }
 
     start() {
