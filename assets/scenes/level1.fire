@@ -180,7 +180,7 @@
       "array": [
         0,
         0,
-        363.7198601293157,
+        359.4005425705421,
         0,
         0,
         0,
@@ -593,8 +593,11 @@
       "__id__": 13
     },
     "_enabled": true,
-    "platform": {
+    "platformPrefab": {
       "__uuid__": "33a4165e-13d9-4140-98e5-d58f1272dbef"
+    },
+    "diamondPrefab": {
+      "__uuid__": "42694c5c-789e-485b-a365-3cd2329470ec"
     },
     "xOffsetMin": 60,
     "xOffsetMax": 200,
@@ -618,7 +621,7 @@
       "height": 576
     },
     "_fitWidth": false,
-    "_fitHeight": true,
+    "_fitHeight": false,
     "_id": "b7OLD5tCJAsqDHPuW1xjVR"
   },
   {

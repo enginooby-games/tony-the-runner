@@ -11,7 +11,14 @@ const TILE_SIZE: number = 64;
 @ccclass
 export default class Platform extends cc.Component {
     @property(cc.Prefab)
-    platformTile = null;
+    tilePrefab = null;
+    @property(cc.Prefab)
+    diamondPrefab = null
+
+    @property
+    diamondOffsetMin: number = 100
+    @property
+    diamondOffsetMax: number = 200
 
     _speed: number
     _active: boolean // whether visible on the screen
@@ -25,11 +32,10 @@ export default class Platform extends cc.Component {
         this._active = true;
         this.node.removeAllChildren()
         this.node.setPosition(data.x, data.y);
-        
 
         // create tiles
         for (let i = 0; i < data.tilesCount; i++) {
-            const tile: cc.Node = cc.instantiate(this.platformTile);
+            const tile: cc.Node = cc.instantiate(this.tilePrefab);
             this.node.addChild(tile)
             tile.setPosition(i * tile.width, 0)
         }
@@ -37,6 +43,19 @@ export default class Platform extends cc.Component {
         // update node size
         this.node.width = TILE_SIZE * data.tilesCount;
         this.node.height = TILE_SIZE;
+
+        this.createDiamonds()
+    }
+
+    createDiamonds() {
+
+        this.node.children.forEach((tile: cc.Node) => {
+            if (Math.random() >= 0.4) return // diamond occurrence: 40%
+            const offsetY: number = this.diamondOffsetMin + Math.random() * (this.diamondOffsetMax - this.diamondOffsetMin)
+            const diamond: cc.Node = cc.instantiate(this.diamondPrefab)
+            diamond.setPosition(0, offsetY)
+            tile.addChild(diamond)
+        })
     }
 
     update(dt) {

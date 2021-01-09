@@ -9,11 +9,13 @@ const { ccclass, property } = cc._decorator;
 let SCREEN_TOP_Y: number
 let SCREEN_BOTTOM_Y: number
 let SCREEN_RIGHT_X: number
+const TILE_SIZE: number = 64;
 
 @ccclass
 export default class NewClass extends cc.Component {
     @property(cc.Prefab)
-    platform = null;
+    platformPrefab = null;
+
     @property
     xOffsetMin: number = 60
     @property
@@ -31,13 +33,15 @@ export default class NewClass extends cc.Component {
     _platformPool: cc.Node[] = []
 
     onLoad() {
-        SCREEN_TOP_Y = cc.winSize.height / 2
-        SCREEN_BOTTOM_Y = -cc.winSize.height / 2
-        SCREEN_RIGHT_X = cc.winSize.width / 2
+        // SCREEN_TOP_Y = cc.winSize.height / 2
+        // SCREEN_BOTTOM_Y = -cc.winSize.height / 2
+        // SCREEN_RIGHT_X = cc.winSize.width / 2
+        SCREEN_TOP_Y = this.node.parent.height / 2
+        SCREEN_BOTTOM_Y = -this.node.parent.height / 2
+        SCREEN_RIGHT_X = this.node.parent.width / 2
     }
 
     start() {
-        // for (let i = 0; i < 3; i++)
         this.createPlatform()
     }
 
@@ -54,11 +58,11 @@ export default class NewClass extends cc.Component {
         const yOffset: number = this.yOffsetMin + Math.random() * (this.yOffsetMax - this.yOffsetMin)
 
         let tempY: number = this._currentPlatform.y + yOffset
-        tempY = Math.min(tempY, SCREEN_TOP_Y - 64)
+        tempY = Math.min(tempY, SCREEN_TOP_Y - 64 * 2)
         tempY = Math.max(tempY, SCREEN_BOTTOM_Y + 64 / 2)
 
         // data.x = this._currentPlatform.node.x + xOffset
-        data.x = cc.winSize.width / 2
+        data.x = SCREEN_RIGHT_X
         data.y = tempY
 
         data.tilesCount = this.tilesCountMin + Math.floor(Math.random() * (this.tilesCountMax - this.tilesCountMin))
@@ -66,14 +70,15 @@ export default class NewClass extends cc.Component {
         return data
     }
 
-    createPlatform(data?: PlatformData) {
+    createPlatform() {
+        // pool system: reuse last inactive platform to init new platform
         const lastInactivePlatform: cc.Node = this._platformPool.find(
             (thePlatform: cc.Node) => !(thePlatform.getComponent("Platform") as Platform)._active)
 
         if (lastInactivePlatform) {
             this._currentPlatform = lastInactivePlatform;
         } else {
-            this._currentPlatform = cc.instantiate(this.platform);
+            this._currentPlatform = cc.instantiate(this.platformPrefab);
             this.node.addChild(this._currentPlatform)
             this._platformPool.push(this._currentPlatform)
         }
