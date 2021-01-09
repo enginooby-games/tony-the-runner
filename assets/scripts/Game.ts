@@ -9,14 +9,14 @@ const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class Game extends cc.Component {
-    onLoad () {
+    onLoad() {
         this.enablePhysics();
     }
 
     enablePhysics() {
         const physicsManager: cc.PhysicsManager = cc.director.getPhysicsManager();
         physicsManager.enabled = true;
-        physicsManager.debugDrawFlags = 0;
+        physicsManager.debugDrawFlags = 1;
     }
 
     start() {
