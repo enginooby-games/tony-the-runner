@@ -20,6 +20,9 @@ export default class Game extends cc.Component {
         this.player.on('score', () => {
             this.scoreLabel.string = (++Globals.score).toString()
         })
+        this.player.once('die', () => {
+            cc.director.loadScene('Game Over')
+        })
     }
 
     enablePhysics() {

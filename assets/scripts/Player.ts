@@ -32,8 +32,8 @@ export default class Player extends cc.Component {
 
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this)
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this)
-        this.node.parent.on((cc.SystemEvent.EventType as any).TOUCH_START, this.onTouchStart, this)
-        this.node.parent.on((cc.SystemEvent.EventType as any).TOUCH_END, this.onTouchEnd, this)
+        this.node.parent.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this)
+        this.node.parent.on(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this)
     }
 
     onKeyDown(event: cc.Event.EventCustom) {
@@ -101,6 +101,10 @@ export default class Player extends cc.Component {
         }
 
         this.animate()
+
+        if(this.node.y <-cc.winSize.height/2){
+            this.node.emit('die')
+        }
     }
 
     jump() {
