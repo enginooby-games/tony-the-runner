@@ -6,17 +6,16 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
 const { ccclass, property } = cc._decorator;
-const tileSize: number = 64;
+const TILE_SIZE: number = 64;
 
 @ccclass
-export default class NewClass extends cc.Component {
+export default class Platform extends cc.Component {
     @property(cc.Prefab)
     platformTile = null;
 
     // onLoad () {}
 
     start() {
-        this.init({tilesCount:4, x: 0, y: 0});
     }
 
     init(data: PlatformData) {
@@ -30,9 +29,11 @@ export default class NewClass extends cc.Component {
         }
 
         // update node size
-        this.node.width = tileSize * data.tilesCount;
-        this.node.height = tileSize;
+        this.node.width = TILE_SIZE * data.tilesCount;
+        this.node.height = TILE_SIZE;
     }
 
-    // update (dt) {}
+    update(dt) {
+       
+    }
 }
