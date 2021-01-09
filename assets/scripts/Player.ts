@@ -64,7 +64,14 @@ export default class Player extends cc.Component {
         // this._isGrounded = false
     }
 
+    onCollisionEnter(other: cc.Collider, self: cc.Collider) {
+        if(other.node.name === 'Diamond') {
+            other.node.destroy();
+        }
+    }
+
     start() {
+
     }
 
     update(dt) {
