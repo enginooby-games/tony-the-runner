@@ -137,6 +137,10 @@ export default class Player extends cc.Component {
             other.node.destroy()
             this.node.emit('score')
         }
+
+        if(other.node.name === 'Spike') {
+            this.node.emit('die')
+        }
     }
 
     start() {

@@ -14,6 +14,8 @@ export default class Platform extends cc.Component {
     tilePrefab = null;
     @property(cc.Prefab)
     diamondPrefab = null
+    @property(cc.Prefab)
+    spikePrefab = null
 
     @property
     diamondOffsetMin: number = 100
@@ -47,17 +49,24 @@ export default class Platform extends cc.Component {
         this.node.width = TILE_SIZE * data.tilesCount;
         this.node.height = TILE_SIZE;
 
-        this.createDiamonds()
+        this.createItems()
     }
 
-    createDiamonds() {
-
+    createItems() {
         this.node.children.forEach((tile: cc.Node) => {
-            if (Math.random() >= 0.4) return // diamond occurrence: 40%
-            const offsetY: number = this.diamondOffsetMin + Math.random() * (this.diamondOffsetMax - this.diamondOffsetMin)
-            const diamond: cc.Node = cc.instantiate(this.diamondPrefab)
-            diamond.setPosition(0, offsetY)
-            tile.addChild(diamond)
+            const random: number = Math.random()
+            // diamond occurrence: 40%
+            if (random <= 0.4) {
+                const offsetY: number = this.diamondOffsetMin + Math.random() * (this.diamondOffsetMax - this.diamondOffsetMin)
+                const diamond: cc.Node = cc.instantiate(this.diamondPrefab)
+                diamond.setPosition(0, offsetY)
+                tile.addChild(diamond)
+                // spike occurence: 15%
+            } else if (0.4 < random && random < 0.55) {
+                const spike: cc.Node = cc.instantiate(this.spikePrefab)
+                spike.setPosition(0, 48)
+                tile.addChild(spike)
+            }
         })
     }
 
