@@ -1,6 +1,6 @@
 {
   "ver": "2.3.5",
-  "uuid": "91c9b0aa-8a3a-49ab-bd1c-5e8b25fe91e2",
+  "uuid": "65b816d9-e088-43e4-a807-8eaa576b9d98",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
@@ -11,10 +11,10 @@
   "height": 64,
   "platformSettings": {},
   "subMetas": {
-    "Diamond 5": {
+    "Diamond III": {
       "ver": "1.0.4",
-      "uuid": "07c957bf-f0cb-4d61-9fbd-fa03ed5ab368",
-      "rawTextureUuid": "91c9b0aa-8a3a-49ab-bd1c-5e8b25fe91e2",
+      "uuid": "f19c2a95-1178-403d-b358-84652a28a4fc",
+      "rawTextureUuid": "65b816d9-e088-43e4-a807-8eaa576b9d98",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

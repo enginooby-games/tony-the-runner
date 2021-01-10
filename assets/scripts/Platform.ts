@@ -110,11 +110,11 @@ export default class Platform extends cc.Component {
     createDiamond(tile: cc.Node) {
         const random: number = Math.random()
         let diamondTypeIndex: number = null
-        if (random <= 0.6) {    // diamond 1 probability: 60%
+        if (random <= 0.7) {    // diamond 1 probability: 70%
             diamondTypeIndex = 0
-        } else if (0.6 < random && random < 0.9) {  // diamond 5 probability: 30%
+        } else if (0.7 < random && random < 0.95) {  // diamond 5 probability: 25%
             diamondTypeIndex = 1
-        } else {    // diamond 10 probability: 10% 
+        } else {    // diamond 10 probability: 5% 
             diamondTypeIndex = 2
         }
 

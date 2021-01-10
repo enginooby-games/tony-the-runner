@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Diamond 10",
+    "_name": "Diamond III",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
@@ -58,8 +58,8 @@
         0,
         0,
         1,
-        2,
-        2,
+        1.7,
+        1.7,
         1
       ]
     },
@@ -135,7 +135,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "1c254892-debf-4a11-ade6-dbbdbe0003d3"
+      "__uuid__": "64194f57-4eec-4e55-b32e-7456b4ab04c5"
     },
     "fileId": "",
     "sync": false

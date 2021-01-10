@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Diamond 1",
+    "_name": "Diamond II",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
@@ -58,8 +58,8 @@
         0,
         0,
         1,
-        1,
-        1,
+        1.25,
+        1.25,
         1
       ]
     },
@@ -92,7 +92,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "7dbc9efc-4cd8-4a7c-bc86-0ee83aecccdf"
+      "__uuid__": "07c957bf-f0cb-4d61-9fbd-fa03ed5ab368"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -135,7 +135,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "42694c5c-789e-485b-a365-3cd2329470ec"
+      "__uuid__": "b7530e90-0a46-4eec-a8b6-2fd941aba46b"
     },
     "fileId": "",
     "sync": false

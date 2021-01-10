@@ -134,16 +134,16 @@ export default class Player extends cc.Component {
 
     onCollisionEnter(other: cc.Collider, self: cc.Collider) {
         switch (other.node.name) {
-            case 'Diamond 1':
+            case 'Diamond I':
                 this.node.emit('score', 1)
                 other.node.destroy()
                 break
-            case 'Diamond 5':
+            case 'Diamond II':
                 this.node.emit('score', 5)
                 other.node.destroy()
                 break
-            case 'Diamond 10':
-                this.node.emit('score', 10)
+            case 'Diamond III':
+                this.node.emit('score', 20)
                 other.node.destroy()
                 break
             case 'Spike':
