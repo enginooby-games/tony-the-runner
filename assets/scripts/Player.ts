@@ -237,7 +237,7 @@ export default class Player extends cc.Component {
         } else if (this._isJumping && !this._maxJumpDistanceReached) {
             const jumpDistance = this.node.y - this._startJumpY;
             //  if jump distance is not maximum
-            if (jumpDistance < this.maxJumpDistance && this.node.y < cc.winSize.height / 2 - this.node.height * 2.5) {
+            if (jumpDistance < this.maxJumpDistance && this.node.y < cc.winSize.height / 2 - 130) {
                 //  keep player's Y speed
                 this._rigidBody.linearVelocity = this.jumpSpeed;
             } else {

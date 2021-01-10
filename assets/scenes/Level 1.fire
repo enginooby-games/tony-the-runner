@@ -714,7 +714,7 @@
       "y": 250
     },
     "moveSpeed": 150,
-    "maxJumpDistance": 200,
+    "maxJumpDistance": 170,
     "jumpSprite": {
       "__uuid__": "4008cb7d-3590-4890-ae52-d5208f165300"
     },
