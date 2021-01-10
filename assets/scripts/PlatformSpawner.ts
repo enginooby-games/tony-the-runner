@@ -4,6 +4,7 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
+import { Globals } from "./Globals";
 import Platform from "./Platform";
 const { ccclass, property } = cc._decorator;
 let SCREEN_TOP_Y: number
@@ -88,7 +89,7 @@ export default class NewClass extends cc.Component {
     }
 
     update(dt) {
-        this.node.children.forEach((child: cc.Node) => child.x -= 100 * dt)
+        this.node.children.forEach((child: cc.Node) => child.x -= Globals.speed * dt)
 
         const currentPlatformRightX = this._currentPlatform.x + this._currentPlatform.width
 

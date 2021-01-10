@@ -18,6 +18,8 @@ export default class Game extends cc.Component {
     backgroundMusic: cc.AudioClip = null
     @property(cc.AudioClip)
     diamondSfx: cc.AudioClip = null
+    @property
+    accelerate: number = 0.02
 
     onLoad() {
         if (!cc.audioEngine.isMusicPlaying()) {
@@ -48,5 +50,7 @@ export default class Game extends cc.Component {
 
     }
 
-    // update (dt) {}
+    update(dt) {
+        Globals.speed += this.accelerate
+    }
 }

@@ -19,13 +19,12 @@ export default class NewClass extends cc.Component {
 
     restart() {
         Globals.score = 0
+        Globals.speed = 50
         cc.director.loadScene('Level 1')
     }
 
     start() {
         this.scoreLabel.string = `Score: ${Globals.score}`
-
-
     }
 
     // update (dt) {}

@@ -4,7 +4,7 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-
+import {Globals} from './Globals'
 const { ccclass, property } = cc._decorator;
 const TILE_SIZE: number = 64;
 
@@ -73,7 +73,7 @@ export default class Platform extends cc.Component {
     update(dt) {
         // this.node.x -= 50 * dt;
         // this.node.children.forEach((child: cc.Node) => child.getComponent(cc.RigidBody).syncPosition(true))
-        this.node.children.forEach((child: cc.Node) => child.x -= this._speed * dt)
+        this.node.children.forEach((child: cc.Node) => child.x -= Globals.speed * dt)
         if (this.node.x < 0 - this.node.width) {
             this._active = false
         }
