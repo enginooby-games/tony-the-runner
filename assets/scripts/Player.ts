@@ -12,6 +12,8 @@ export default class Player extends cc.Component {
     @property
     jumpSpeed: cc.Vec2 = new cc.Vec2(0, 300)
     @property
+    moveSpeed: number = 150
+    @property
     maxJumpDistance: number = 300
     @property(cc.SpriteFrame)
     jumpSprite: cc.SpriteFrame = null
@@ -20,6 +22,8 @@ export default class Player extends cc.Component {
     _sprite: cc.Sprite
     _rigidBody: cc.RigidBody
     _jumpKeyPressing: boolean = false
+    _leftKeyPressing: boolean = false
+    _rightKeyPressing: boolean = false
     _isJumping: boolean = false
     _maxJumpDistanceReached: boolean
     _isGrounded: boolean = false
@@ -42,8 +46,12 @@ export default class Player extends cc.Component {
                 this._jumpKeyPressing = true
                 break;
             case cc.macro.KEY.left:
+            case cc.macro.KEY.a:
+                this._leftKeyPressing = true
                 break;
             case cc.macro.KEY.right:
+            case cc.macro.KEY.d:
+                this._rightKeyPressing = true
                 break;
         }
     }
@@ -54,12 +62,19 @@ export default class Player extends cc.Component {
                 this._jumpKeyPressing = false
                 this._isJumping = false
                 break;
+            case cc.macro.KEY.left:
+            case cc.macro.KEY.a:
+                this._leftKeyPressing = false
+                break;
+            case cc.macro.KEY.right:
+            case cc.macro.KEY.d:
+                this._rightKeyPressing = false
+                break;
         }
     }
 
     onTouchStart() {
         this._jumpKeyPressing = true
-
     }
 
     onTouchEnd() {
@@ -74,6 +89,7 @@ export default class Player extends cc.Component {
         if (worldManifold.points[0].y >= otherCollider.node.parent.y + 320) {
             this._isGrounded = true
         }
+        // this._isGrounded = true
     }
 
     onEndContact() {
@@ -109,6 +125,12 @@ export default class Player extends cc.Component {
     update(dt) {
         if (this._jumpKeyPressing) {
             this.jump();
+        }
+
+        if (this._leftKeyPressing) {
+            this.node.x -= this.moveSpeed * dt
+        } else if (this._rightKeyPressing) {
+            this.node.x += this.moveSpeed * dt
         }
 
         this.animate()
