@@ -27,9 +27,10 @@ export default class Game extends cc.Component {
         }
 
         this.enablePhysics();
-        this.player.on('score', () => {
+        this.player.on('score', (amount: number) => {
             cc.audioEngine.play(this.diamondSfx, false, 1)
-            this.scoreLabel.string = (++Globals.score).toString()
+            Globals.score += amount
+            this.scoreLabel.string = Globals.score.toString()
         })
         this.player.once('die', () => {
             cc.director.loadScene('Game Over')
@@ -39,7 +40,7 @@ export default class Game extends cc.Component {
     enablePhysics() {
         const physicsManager: cc.PhysicsManager = cc.director.getPhysicsManager();
         physicsManager.enabled = true;
-        physicsManager.debugDrawFlags = 1;
+        physicsManager.debugDrawFlags = 0;
 
         cc.director.getCollisionManager().enabled = true;
         cc.director.getCollisionManager().enabledDebugDraw = false;

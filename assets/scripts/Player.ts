@@ -133,19 +133,26 @@ export default class Player extends cc.Component {
     }
 
     onCollisionEnter(other: cc.Collider, self: cc.Collider) {
-        if (other.node.name === 'Diamond') {
-            other.node.destroy()
-            this.node.emit('score')
-        }
-
-        if(other.node.name === 'Spike') {
-            this.node.emit('die')
+        switch (other.node.name) {
+            case 'Diamond 1':
+                this.node.emit('score', 1)
+                other.node.destroy()
+                break
+            case 'Diamond 5':
+                this.node.emit('score', 5)
+                other.node.destroy()
+                break
+            case 'Diamond 10':
+                this.node.emit('score', 10)
+                other.node.destroy()
+                break
+            case 'Spike':
+                this.node.emit('die')
+                break
         }
     }
 
     start() {
-
-
     }
 
     animate() {

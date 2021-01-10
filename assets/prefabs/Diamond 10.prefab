@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Diamond",
+    "_name": "Diamond 10",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
@@ -58,8 +58,8 @@
         0,
         0,
         1,
-        1,
-        1,
+        2,
+        2,
         1
       ]
     },
@@ -92,7 +92,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "7dbc9efc-4cd8-4a7c-bc86-0ee83aecccdf"
+      "__uuid__": "f19c2a95-1178-403d-b358-84652a28a4fc"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -135,7 +135,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "42694c5c-789e-485b-a365-3cd2329470ec"
+      "__uuid__": "1c254892-debf-4a11-ade6-dbbdbe0003d3"
     },
     "fileId": "",
     "sync": false

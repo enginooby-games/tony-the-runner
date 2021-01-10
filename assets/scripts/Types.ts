@@ -1,7 +1,6 @@
 export type PlatformData = {
     shape: PlatformShape;
     tilesCount: number;
-    speed: number;
     x: number;
     y: number;
 }

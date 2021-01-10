@@ -35,12 +35,12 @@ export default class NewClass extends cc.Component {
     _platformPool: cc.Node[] = []
 
     onLoad() {
-        // SCREEN_TOP_Y = cc.winSize.height / 2
-        // SCREEN_BOTTOM_Y = -cc.winSize.height / 2
-        // SCREEN_RIGHT_X = cc.winSize.width / 2
-        SCREEN_TOP_Y = this.node.parent.height / 2
-        SCREEN_BOTTOM_Y = -this.node.parent.height / 2
-        SCREEN_RIGHT_X = this.node.parent.width / 2
+        SCREEN_TOP_Y = cc.winSize.height / 2
+        SCREEN_BOTTOM_Y = -cc.winSize.height / 2
+        SCREEN_RIGHT_X = cc.winSize.width / 2
+        // SCREEN_TOP_Y = this.node.parent.height / 2
+        // SCREEN_BOTTOM_Y = -this.node.parent.height / 2
+        // SCREEN_RIGHT_X = this.node.parent.width / 2
     }
 
     start() {
@@ -52,7 +52,6 @@ export default class NewClass extends cc.Component {
         let data: PlatformData = {
             shape: this.randomEnum(PlatformShape),
             tilesCount: 0,
-            speed: 100,
             x: 0,
             y: 0
         }

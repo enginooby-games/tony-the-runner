@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Platform",
+    "_name": "Diamond 1",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
@@ -39,8 +39,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
+      "width": 35,
+      "height": 28
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -51,8 +51,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -512,
-        -288,
+        -6.656,
+        -33.024,
         0,
         0,
         0,
@@ -77,57 +77,56 @@
     "_id": ""
   },
   {
-    "__type__": "a8388G1YrVPDoinfrP4UfN4",
+    "__type__": "cc.Sprite",
     "_name": "",
     "_objFlags": 0,
     "node": {
       "__id__": 1
     },
     "_enabled": true,
-    "tilePrefab": {
-      "__uuid__": "0212dc9f-e06a-439d-b1e3-aabec40f8200"
-    },
-    "diamondPrefabs": [
+    "_materials": [
       {
-        "__uuid__": "42694c5c-789e-485b-a365-3cd2329470ec"
-      },
-      {
-        "__uuid__": "b7530e90-0a46-4eec-a8b6-2fd941aba46b"
-      },
-      {
-        "__uuid__": "1c254892-debf-4a11-ade6-dbbdbe0003d3"
+        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
       }
     ],
-    "spikePrefab": {
-      "__uuid__": "3f719d3e-18e5-43fe-9ed1-015ecf70c986"
+    "_srcBlendFactor": 770,
+    "_dstBlendFactor": 771,
+    "_spriteFrame": {
+      "__uuid__": "7dbc9efc-4cd8-4a7c-bc86-0ee83aecccdf"
     },
-    "diamondOffsetMin": 100,
-    "diamondOffsetMax": 200,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.RigidBody",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
     "_type": 0,
-    "_allowSleep": true,
-    "_gravityScale": 1,
-    "_linearDamping": 0,
-    "_angularDamping": 0,
-    "_linearVelocity": {
+    "_sizeMode": 1,
+    "_fillType": 0,
+    "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
       "y": 0
     },
-    "_angularVelocity": 0,
-    "_fixedRotation": false,
-    "enabledContactListener": false,
-    "bullet": false,
-    "awakeOnLoad": true,
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_atlas": null,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.BoxCollider",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "tag": 0,
+    "_offset": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_size": {
+      "__type__": "cc.Size",
+      "width": 35,
+      "height": 28
+    },
     "_id": ""
   },
   {
@@ -136,7 +135,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "33a4165e-13d9-4140-98e5-d58f1272dbef"
+      "__uuid__": "42694c5c-789e-485b-a365-3cd2329470ec"
     },
     "fileId": "",
     "sync": false

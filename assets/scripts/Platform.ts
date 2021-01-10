@@ -8,8 +8,8 @@ const TILE_SIZE: number = 64;
 export default class Platform extends cc.Component {
     @property(cc.Prefab)
     tilePrefab = null;
-    @property(cc.Prefab)
-    diamondPrefab = null
+    @property({ type: [cc.Prefab] })
+    diamondPrefabs: cc.Prefab[] = []
     @property(cc.Prefab)
     spikePrefab = null
 
@@ -18,7 +18,6 @@ export default class Platform extends cc.Component {
     @property
     diamondOffsetMax: number = 200
 
-    _speed: number
     _active: boolean // whether visible on the screen
     // onLoad () {}
 
@@ -26,7 +25,6 @@ export default class Platform extends cc.Component {
     }
 
     init(data: PlatformData) {
-        this._speed = data.speed;
         this._active = true;
         this.node.removeAllChildren()
         this.node.setPosition(data.x, data.y);
@@ -110,8 +108,19 @@ export default class Platform extends cc.Component {
     }
 
     createDiamond(tile: cc.Node) {
+        const random: number = Math.random()
+        let diamondTypeIndex: number = null
+        if (random <= 0.6) {    // diamond 1 probability: 60%
+            diamondTypeIndex = 0
+        } else if (0.6 < random && random < 0.9) {  // diamond 5 probability: 30%
+            diamondTypeIndex = 1
+        } else {    // diamond 10 probability: 10% 
+            diamondTypeIndex = 2
+        }
+
+        const diamond: cc.Node = cc.instantiate(this.diamondPrefabs[diamondTypeIndex])
+
         const offsetY: number = this.diamondOffsetMin + Math.random() * (this.diamondOffsetMax - this.diamondOffsetMin)
-        const diamond: cc.Node = cc.instantiate(this.diamondPrefab)
         diamond.setPosition(0, offsetY)
         tile.addChild(diamond)
     }
