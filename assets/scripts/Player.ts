@@ -41,6 +41,10 @@ export default class Player extends cc.Component {
             case cc.macro.KEY.space:
                 this._jumpKeyPressing = true
                 break;
+            case cc.macro.KEY.left:
+                break;
+            case cc.macro.KEY.right:
+                break;
         }
     }
 
@@ -55,6 +59,7 @@ export default class Player extends cc.Component {
 
     onTouchStart() {
         this._jumpKeyPressing = true
+
     }
 
     onTouchEnd() {
@@ -62,8 +67,13 @@ export default class Player extends cc.Component {
         this._isJumping = false
     }
 
-    onBeginContact() {
-        this._isGrounded = true
+    onBeginContact(contact: cc.PhysicsContact, selfCollider: cc.PhysicsBoxCollider, otherCollider: cc.PhysicsBoxCollider) {
+        const worldManifold: cc.WorldManifold = contact.getWorldManifold();
+
+        // if contact height is greater than top Y of the platform
+        if (worldManifold.points[0].y >= otherCollider.node.parent.y + 320) {
+            this._isGrounded = true
+        }
     }
 
     onEndContact() {
@@ -78,6 +88,7 @@ export default class Player extends cc.Component {
     }
 
     start() {
+
 
     }
 
@@ -102,7 +113,7 @@ export default class Player extends cc.Component {
 
         this.animate()
 
-        if(this.node.y <-cc.winSize.height/2){
+        if (this.node.y < -cc.winSize.height / 2) {
             this.node.emit('die')
         }
     }
