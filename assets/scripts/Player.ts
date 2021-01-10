@@ -10,6 +10,8 @@ const { ccclass, property } = cc._decorator;
 @ccclass
 export default class Player extends cc.Component {
     @property
+    health: number = 3
+    @property
     jumpSpeed: cc.Vec2 = new cc.Vec2(0, 300)
     @property
     moveSpeed: number = 150
@@ -17,6 +19,7 @@ export default class Player extends cc.Component {
     maxJumpDistance: number = 300
     @property(cc.SpriteFrame)
     jumpSprite: cc.SpriteFrame = null
+
     @property(cc.Node)
     leftButton: cc.Node = null
     @property(cc.Node)
@@ -147,9 +150,31 @@ export default class Player extends cc.Component {
                 other.node.destroy()
                 break
             case 'Spike':
-                this.node.emit('die')
+                this.node.color = new cc.Color(255, 0, 0)
+
+                if (this.health > 1) {
+                    this.lostHealth()
+                } else {
+                    this.node.emit('die')
+                }
                 break
         }
+    }
+
+    onCollisionExit(other: cc.Collider, self: cc.Collider) {
+        switch (other.node.name) {
+            case 'Spike':
+                this.node.color = new cc.Color(255, 255, 255)
+                break
+        }
+    }
+
+    lostHealth() {
+        this.health--
+    }
+
+    gainHealth() {
+        this.health++
     }
 
     start() {
