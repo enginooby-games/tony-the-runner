@@ -92,8 +92,10 @@ export default class Player extends cc.Component {
         // this._isGrounded = true
     }
 
-    onEndContact() {
-        // this._isGrounded = false
+    onEndContact(contact: cc.PhysicsContact, selfCollider: cc.PhysicsBoxCollider, otherCollider: cc.PhysicsBoxCollider) {
+        if (otherCollider.node.name === 'lastRight' || otherCollider.node.name === 'lastLeft') {
+            this._isGrounded = false
+        }
     }
 
     onCollisionEnter(other: cc.Collider, self: cc.Collider) {

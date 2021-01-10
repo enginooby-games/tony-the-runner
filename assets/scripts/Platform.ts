@@ -38,6 +38,9 @@ export default class Platform extends cc.Component {
             const tile: cc.Node = cc.instantiate(this.tilePrefab);
             this.node.addChild(tile)
             tile.setPosition(i * tile.width, 0)
+
+            if (i == 0) tile.name = "lastLeft"
+            if (i == data.tilesCount - 1) tile.name = "lastRight"
         }
 
         // update node size
