@@ -17,6 +17,12 @@ export default class Player extends cc.Component {
     maxJumpDistance: number = 300
     @property(cc.SpriteFrame)
     jumpSprite: cc.SpriteFrame = null
+    @property(cc.Node)
+    leftButton: cc.Node = null
+    @property(cc.Node)
+    rightButton: cc.Node = null
+    @property(cc.Node)
+    jumpButton: cc.Node = null
 
     _animation: cc.Animation
     _sprite: cc.Sprite
@@ -36,8 +42,36 @@ export default class Player extends cc.Component {
 
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this)
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this)
-        this.node.parent.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this)
-        this.node.parent.on(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this)
+        // this.node.parent.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this)
+        // this.node.parent.on(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this)
+
+        if (this.leftButton) {
+            this.leftButton.on(cc.Node.EventType.TOUCH_START, () => {
+                this._leftKeyPressing = true
+            }, this)
+            this.leftButton.on(cc.Node.EventType.TOUCH_END, () => {
+                this._leftKeyPressing = false
+            }, this)
+        }
+
+        if (this.rightButton) {
+            this.rightButton.on(cc.Node.EventType.TOUCH_START, () => {
+                this._rightKeyPressing = true
+            }, this)
+            this.rightButton.on(cc.Node.EventType.TOUCH_END, () => {
+                this._rightKeyPressing = false
+            }, this)
+        }
+
+        if (this.jumpButton) {
+            this.jumpButton.on(cc.Node.EventType.TOUCH_START, () => {
+                this._jumpKeyPressing = true
+            }, this)
+            this.jumpButton.on(cc.Node.EventType.TOUCH_END, () => {
+                this._jumpKeyPressing = false
+                this._isJumping = false
+            }, this)
+        }
     }
 
     onKeyDown(event: cc.Event.EventCustom) {
@@ -73,14 +107,14 @@ export default class Player extends cc.Component {
         }
     }
 
-    onTouchStart() {
-        this._jumpKeyPressing = true
-    }
+    // onTouchStart() {
+    //     this._jumpKeyPressing = true
+    // }
 
-    onTouchEnd() {
-        this._jumpKeyPressing = false
-        this._isJumping = false
-    }
+    // onTouchEnd() {
+    //     this._jumpKeyPressing = false
+    //     this._isJumping = false
+    // }
 
     onBeginContact(contact: cc.PhysicsContact, selfCollider: cc.PhysicsBoxCollider, otherCollider: cc.PhysicsBoxCollider) {
         const worldManifold: cc.WorldManifold = contact.getWorldManifold();
@@ -93,7 +127,7 @@ export default class Player extends cc.Component {
     }
 
     onEndContact(contact: cc.PhysicsContact, selfCollider: cc.PhysicsBoxCollider, otherCollider: cc.PhysicsBoxCollider) {
-        if (otherCollider.node.name === 'lastRight' || otherCollider.node.name === 'lastLeft') {
+        if (otherCollider.node.name === 'lastRight') {
             this._isGrounded = false
         }
     }
