@@ -5,6 +5,8 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import HealthBar from "./HealthBar";
+
 const { ccclass, property } = cc._decorator;
 
 @ccclass
@@ -26,6 +28,8 @@ export default class Player extends cc.Component {
     rightButton: cc.Node = null
     @property(cc.Node)
     jumpButton: cc.Node = null
+    @property(HealthBar)
+    healthBar:HealthBar = null
 
     _animation: cc.Animation
     _sprite: cc.Sprite
@@ -39,6 +43,8 @@ export default class Player extends cc.Component {
     _startJumpY: number
 
     onLoad() {
+        this.healthBar.init(this.health)
+
         this._animation = this.getComponent(cc.Animation)
         this._sprite = this.getComponent(cc.Sprite)
         this._rigidBody = this.getComponent(cc.RigidBody)
@@ -171,10 +177,13 @@ export default class Player extends cc.Component {
 
     lostHealth() {
         this.health--
+        this.healthBar.decrease()
+        
     }
 
     gainHealth() {
         this.health++
+        this.healthBar.increase()
     }
 
     start() {
