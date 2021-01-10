@@ -7,11 +7,14 @@ const TILE_SIZE: number = 64;
 @ccclass
 export default class Platform extends cc.Component {
     @property(cc.Prefab)
-    tilePrefab = null;
-    @property({ type: [cc.Prefab] })
-    diamondPrefabs: cc.Prefab[] = []
+    dirtGrassPrefab = null;
+    @property(cc.Prefab)
+    dirtPrefab = null;
     @property(cc.Prefab)
     spikePrefab = null
+    @property({ type: [cc.Prefab] })
+    diamondPrefabs: cc.Prefab[] = []
+
 
     @property
     diamondOffsetMin: number = 100
@@ -31,11 +34,16 @@ export default class Platform extends cc.Component {
 
         // create tiles
         for (let i = 0; i < data.tilesCount; i++) {
-            const tile: cc.Node = cc.instantiate(this.tilePrefab);
-            this.node.addChild(tile)
-
-            // if (i == 0) tile.name = "lastLeft"
-            if (i == data.tilesCount - 1) tile.name = "lastTile"
+            let tile: cc.Node
+            if (data.shape == PlatformShape.VERTICAL) {
+                if (i == data.tilesCount - 1) {
+                    tile = cc.instantiate(this.dirtGrassPrefab);
+                } else {
+                    tile = cc.instantiate(this.dirtPrefab);
+                }
+            } else {
+                tile = cc.instantiate(this.dirtGrassPrefab);
+            }
 
             switch (data.shape) {
                 case PlatformShape.HORIZONTAL:
@@ -68,6 +76,8 @@ export default class Platform extends cc.Component {
                     break;
             }
 
+            this.node.addChild(tile)
+            if (i == data.tilesCount - 1) tile.name = "lastTile"
         }
 
         this.createItems(data)

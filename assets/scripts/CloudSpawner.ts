@@ -61,8 +61,6 @@ export default class NewClass extends cc.Component {
     start() {
         this.schedule(function () {
             this.createCloud()
-            cc.log(this.node.childrenCount)
-            cc.log(this.cloudsPool.length)
         }, this.spawnInterval);
     }
 

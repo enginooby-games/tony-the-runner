@@ -57,6 +57,7 @@ export default class Player extends cc.Component {
         if (this.leftButton) {
             this.leftButton.on(cc.Node.EventType.TOUCH_START, () => {
                 this._leftKeyPressing = true
+                this._rightKeyPressing = false
             }, this)
             this.leftButton.on(cc.Node.EventType.TOUCH_END, () => {
                 this._leftKeyPressing = false
@@ -66,6 +67,7 @@ export default class Player extends cc.Component {
         if (this.rightButton) {
             this.rightButton.on(cc.Node.EventType.TOUCH_START, () => {
                 this._rightKeyPressing = true
+                this._leftKeyPressing = false
             }, this)
             this.rightButton.on(cc.Node.EventType.TOUCH_END, () => {
                 this._rightKeyPressing = false
@@ -91,10 +93,12 @@ export default class Player extends cc.Component {
             case cc.macro.KEY.left:
             case cc.macro.KEY.a:
                 this._leftKeyPressing = true
+                this._rightKeyPressing = false
                 break;
             case cc.macro.KEY.right:
             case cc.macro.KEY.d:
                 this._rightKeyPressing = true
+                this._leftKeyPressing = false
                 break;
         }
     }
@@ -129,7 +133,8 @@ export default class Player extends cc.Component {
         const worldManifold: cc.WorldManifold = contact.getWorldManifold();
 
         // if contact height is greater than top Y of the platform
-        if (worldManifold.points[0].y >= otherCollider.node.parent.y + 320) {
+        if (worldManifold.points[0].y >= otherCollider.node.parent.y + 320
+            && otherCollider.node.name != 'Dirt Tile') {
             this._isGrounded = true
         }
         // this._isGrounded = true
@@ -138,7 +143,7 @@ export default class Player extends cc.Component {
     onEndContact(contact: cc.PhysicsContact, selfCollider: cc.PhysicsBoxCollider, otherCollider: cc.PhysicsBoxCollider) {
         if (otherCollider.node.name === 'lastTile') {
             this._isGrounded = false
-        }
+        } 
     }
 
     onCollisionEnter(other: cc.Collider, self: cc.Collider) {
