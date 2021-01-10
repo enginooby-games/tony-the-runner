@@ -2084,6 +2084,7 @@
     "diamondSfx": {
       "__uuid__": "f913e376-b973-42d2-8b55-d879d742ec1f"
     },
+    "accelerate": 0.02,
     "_id": "76gZc2yB1OOYp1vts7ZTbo"
   }
 ]

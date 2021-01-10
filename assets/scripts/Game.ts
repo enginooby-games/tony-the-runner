@@ -39,7 +39,7 @@ export default class Game extends cc.Component {
     enablePhysics() {
         const physicsManager: cc.PhysicsManager = cc.director.getPhysicsManager();
         physicsManager.enabled = true;
-        physicsManager.debugDrawFlags = 0;
+        physicsManager.debugDrawFlags = 1;
 
         cc.director.getCollisionManager().enabled = true;
         cc.director.getCollisionManager().enabledDebugDraw = false;

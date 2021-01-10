@@ -127,7 +127,7 @@ export default class Player extends cc.Component {
     }
 
     onEndContact(contact: cc.PhysicsContact, selfCollider: cc.PhysicsBoxCollider, otherCollider: cc.PhysicsBoxCollider) {
-        if (otherCollider.node.name === 'lastRight') {
+        if (otherCollider.node.name === 'lastTile') {
             this._isGrounded = false
         }
     }

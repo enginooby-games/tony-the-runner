@@ -1,10 +1,6 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-import {Globals} from './Globals'
+import { Globals } from './Globals'
+import { PlatformData, PlatformShape } from './Types'
+
 const { ccclass, property } = cc._decorator;
 const TILE_SIZE: number = 64;
 
@@ -39,35 +35,91 @@ export default class Platform extends cc.Component {
         for (let i = 0; i < data.tilesCount; i++) {
             const tile: cc.Node = cc.instantiate(this.tilePrefab);
             this.node.addChild(tile)
-            tile.setPosition(i * tile.width, 0)
 
-            if (i == 0) tile.name = "lastLeft"
-            if (i == data.tilesCount - 1) tile.name = "lastRight"
+            // if (i == 0) tile.name = "lastLeft"
+            if (i == data.tilesCount - 1) tile.name = "lastTile"
+
+            switch (data.shape) {
+                case PlatformShape.HORIZONTAL:
+                    tile.setPosition(i * tile.width, 0)
+                    // update node size
+                    this.node.width = TILE_SIZE * data.tilesCount;
+                    this.node.height = TILE_SIZE;
+                    break;
+                case PlatformShape.VERTICAL:
+                    tile.setPosition(tile.width, i * tile.height)
+                    this.node.width = TILE_SIZE;
+                    this.node.height = TILE_SIZE * data.tilesCount;
+                    break;
+                case PlatformShape.DIAGONAL_DOWN:
+                    tile.setPosition(i * tile.width, (data.tilesCount - 1 - i) * tile.height)
+                    this.node.width = TILE_SIZE * data.tilesCount;
+                    this.node.height = TILE_SIZE * data.tilesCount;
+                    tile.name = "lastTile"
+                    break;
+                case PlatformShape.DIAGONAL_UP:
+                    tile.setPosition(i * tile.width, i * tile.height)
+                    this.node.width = TILE_SIZE * data.tilesCount;
+                    this.node.height = TILE_SIZE * data.tilesCount;
+                    tile.name = "lastTile"
+                    break;
+                case PlatformShape.ZIC_ZAC:
+                    tile.setPosition(i * tile.width, (i % 2) * tile.height)
+                    this.node.width = TILE_SIZE * data.tilesCount;
+                    this.node.height = TILE_SIZE * 2;
+                    break;
+            }
+
         }
 
-        // update node size
-        this.node.width = TILE_SIZE * data.tilesCount;
-        this.node.height = TILE_SIZE;
+        this.createItems(data)
 
-        this.createItems()
+
     }
 
-    createItems() {
+    createItems(data: PlatformData) {
         this.node.children.forEach((tile: cc.Node) => {
             const random: number = Math.random()
-            // diamond occurrence: 40%
-            if (random <= 0.4) {
-                const offsetY: number = this.diamondOffsetMin + Math.random() * (this.diamondOffsetMax - this.diamondOffsetMin)
-                const diamond: cc.Node = cc.instantiate(this.diamondPrefab)
-                diamond.setPosition(0, offsetY)
-                tile.addChild(diamond)
-                // spike occurence: 15%
-            } else if (0.4 < random && random < 0.55) {
-                const spike: cc.Node = cc.instantiate(this.spikePrefab)
-                spike.setPosition(0, 48)
-                tile.addChild(spike)
+
+            switch (data.shape) {
+                case PlatformShape.HORIZONTAL:
+                case PlatformShape.DIAGONAL_DOWN:
+                case PlatformShape.DIAGONAL_UP:
+                case PlatformShape.ZIC_ZAC:
+                    // diamond occurrence: 40%
+                    if (random <= 0.4) {
+                        this.createDiamond(tile)
+                        // spike occurence: 15%
+                    } else if (0.4 < random && random < 0.55) {
+                        this.createSpike(tile)
+                    }
+                    break
+                case PlatformShape.VERTICAL:
+                    if (tile.name === "lastTile") {
+                        // diamond occurrence: 40%
+                        if (random <= 0.4) {
+                            this.createDiamond(tile)
+                            // spike occurence: 15%
+                        } else if (0.4 < random && random < 0.55) {
+                            this.createSpike(tile)
+                        }
+                    }
+                    break
             }
         })
+    }
+
+    createDiamond(tile: cc.Node) {
+        const offsetY: number = this.diamondOffsetMin + Math.random() * (this.diamondOffsetMax - this.diamondOffsetMin)
+        const diamond: cc.Node = cc.instantiate(this.diamondPrefab)
+        diamond.setPosition(0, offsetY)
+        tile.addChild(diamond)
+    }
+
+    createSpike(tile: cc.Node) {
+        const spike: cc.Node = cc.instantiate(this.spikePrefab)
+        spike.setPosition(0, 48)
+        tile.addChild(spike)
     }
 
     update(dt) {
