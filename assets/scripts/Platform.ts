@@ -84,12 +84,12 @@ export default class Platform extends cc.Component {
             if (i == data.tilesCount - 1) tile.name = "lastTile"
         }
 
-        this.populatePlatforms(data)
+        this.populateTiles(data)
 
 
     }
 
-    populatePlatforms(data: PlatformData) {
+    populateTiles(data: PlatformData) {
         this.node.children.forEach((tile: cc.Node) => {
 
             switch (data.shape) {
@@ -112,7 +112,7 @@ export default class Platform extends cc.Component {
             if (data.shape == PlatformShape.HORIZONTAL && tile.name === 'lastTile' && random < 0.5) {
                 this.createEnemy(tile)
             }
-            // 30% on last tile of horizontal platform
+            // 30% on last tile of up diagonal platform
             if (data.shape == PlatformShape.DIAGONAL_UP && tile.name === 'lastTile' && random < 0.3) {
                 this.createEnemy(tile)
             }
