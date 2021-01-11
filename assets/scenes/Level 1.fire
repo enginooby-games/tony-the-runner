@@ -598,7 +598,7 @@
     "xOffsetMin": 60,
     "xOffsetMax": 200,
     "yOffsetMin": -120,
-    "yOffsetMax": 120,
+    "yOffsetMax": 100,
     "tilesCountMin": 2,
     "tilesCountMax": 6,
     "_id": "aeG9D8eBNH16NEOfJgvyKO"

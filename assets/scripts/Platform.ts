@@ -1,4 +1,5 @@
 import { Globals } from './Globals'
+import Helpers from './Helpers';
 import { PlatformData, PlatformShape } from './Types'
 
 const { ccclass, property } = cc._decorator;
@@ -143,11 +144,14 @@ export default class Platform extends cc.Component {
     }
 
     createTree(tile: cc.Node) {
-        const randomIndex = Math.floor(Math.random() * (this.treePrefabs.length - 1))
-        const tree: cc.Node = cc.instantiate(this.treePrefabs[2])
-        //tree.setScale(scale)
-        //tree.setPosition(0, tile.height + (tree.height * scale) / 2 - tile.height / 2) 
+        const randomIndex = Helpers.randomIntBetween(0, this.treePrefabs.length - 1)
+        const tree: cc.Node = cc.instantiate(this.treePrefabs[randomIndex])
         tile.addChild(tree)
+
+        const scaleX = Helpers.randomBetween(1, 1.75)
+        const scaleY = Helpers.randomBetween(1, 1.75)
+        tree.setScale(scaleX, scaleY)
+        tree.setPosition(0, tile.height + (tree.height * scaleY) / 2 - tile.height / 2) 
     }
 
     update(dt) {
