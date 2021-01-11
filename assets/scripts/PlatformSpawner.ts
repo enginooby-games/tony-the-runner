@@ -52,7 +52,7 @@ export default class NewClass extends cc.Component {
     // for next platform base on current platform
     generateRandomPlatformData(): PlatformData {
         let data: PlatformData = {
-            // shape: PlatformShape.HORIZONTAL,
+            // shape: PlatformShape.VERTICAL,
             shape: Helpers.randomEnum(PlatformShape),
             tilesCount: 0,
             x: 0,
@@ -70,12 +70,30 @@ export default class NewClass extends cc.Component {
         data.x = SCREEN_RIGHT_X
         data.y = tempY
 
-        data.tilesCount = this.tilesCountMin + Math.floor(Math.random() * (this.tilesCountMax - this.tilesCountMin))
+        data.tilesCount = Helpers.randomIntBetween(this.tilesCountMin, this.tilesCountMax)
+
+        // further customize for specific types of platform
+        switch (data.shape) {
+            case PlatformShape.HORIZONTAL:
+                break
+            case PlatformShape.DIAGONAL_DOWN:
+                data.tilesCount = Math.min(data.tilesCount, 4)
+                data.y = Helpers.randomBetween(-200, -50)
+                break
+            case PlatformShape.DIAGONAL_UP:
+                break
+            case PlatformShape.ZIC_ZAC:
+                break
+            case PlatformShape.VERTICAL:
+                data.tilesCount = Math.min(data.tilesCount, 4)
+                data.y = Helpers.randomBetween(-200, -50)
+                break
+        }
 
         return data
     }
 
-   
+
     createPlatform() {
         // pool system: reuse last inactive platform to init new platform
         const lastInactivePlatform: cc.Node = this._platformPool.find(
