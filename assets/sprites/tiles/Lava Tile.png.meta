@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "fab1b4c1-6ab5-4184-ab9a-382db4aaa58a",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 64,
+  "height": 64,
+  "platformSettings": {},
+  "subMetas": {
+    "Lava Tile": {
+      "ver": "1.0.4",
+      "uuid": "6372cd92-0609-42aa-ac33-a5edb2b352a6",
+      "rawTextureUuid": "fab1b4c1-6ab5-4184-ab9a-382db4aaa58a",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 64,
+      "height": 64,
+      "rawWidth": 64,
+      "rawHeight": 64,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
