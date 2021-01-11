@@ -63,7 +63,7 @@ export default class NewClass extends cc.Component {
 
         let tempY: number = this._currentPlatform.y + yOffset
         tempY = Math.min(tempY, SCREEN_TOP_Y - 64 * 2)
-        tempY = Math.max(tempY, SCREEN_BOTTOM_Y + 64 / 2)
+        tempY = Math.max(tempY, SCREEN_BOTTOM_Y + 100) // account for control space
 
         // data.x = this._currentPlatform.node.x + xOffset
         data.x = SCREEN_RIGHT_X
