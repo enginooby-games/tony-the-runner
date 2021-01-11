@@ -17,6 +17,8 @@ export default class Platform extends cc.Component {
     diamondPrefabs: cc.Prefab[] = []
     @property({ type: [cc.Prefab] })
     treePrefabs: cc.Prefab[] = []
+    @property({ type: [cc.Prefab] })
+    enemyPrefabs: cc.Prefab[] = []
 
     @property
     diamondOffsetMin: number = 100
@@ -103,6 +105,18 @@ export default class Platform extends cc.Component {
                     }
                     break
             }
+
+            // populate emeny
+            const random: number = Math.random()
+            // 50% on last tile of horizontal platform
+            if (data.shape == PlatformShape.HORIZONTAL && tile.name === 'lastTile' && random < 0.5) {
+                this.createEnemy(tile)
+            }
+            // 30% on last tile of horizontal platform
+            if (data.shape == PlatformShape.DIAGONAL_UP && tile.name === 'lastTile' && random < 0.3) {
+                this.createEnemy(tile)
+            }
+
         })
     }
 
@@ -117,6 +131,7 @@ export default class Platform extends cc.Component {
         } else {
             if (Math.random() <= 0.5) this.createTree(tile) // tree occurence on empty tile: 50% 
         }
+
     }
 
     createDiamond(tile: cc.Node) {
@@ -137,10 +152,22 @@ export default class Platform extends cc.Component {
         tile.addChild(diamond)
     }
 
+    createEnemy(tile: cc.Node) {
+        const randomIndex = Helpers.randomIntBetween(0, this.enemyPrefabs.length - 1)
+        const enemy: cc.Node = cc.instantiate(this.enemyPrefabs[randomIndex])
+        enemy.setPosition(0, tile.height + enemy.height / 2 - enemy.height / 2) // pre-calculate position in prefabs to reduce calculations
+        tile.addChild(enemy)
+    }
+
     createSpike(tile: cc.Node) {
         const spike: cc.Node = cc.instantiate(this.spikePrefab)
         // spike.setPosition(0, tile.height + spike.height / 2 - tile.height / 2) // pre-calculate position in prefabs to reduce calculations
         tile.addChild(spike)
+
+        const scaleX = Helpers.randomBetween(0.5, 1)
+        const scaleY = Helpers.randomBetween(0.5, 1.5)
+        spike.setScale(scaleX, scaleY)
+        spike.setPosition(0, tile.height + (spike.height * scaleY) / 2 - tile.height / 2)
     }
 
     createTree(tile: cc.Node) {
@@ -151,7 +178,7 @@ export default class Platform extends cc.Component {
         const scaleX = Helpers.randomBetween(1, 1.75)
         const scaleY = Helpers.randomBetween(1, 1.75)
         tree.setScale(scaleX, scaleY)
-        tree.setPosition(0, tile.height + (tree.height * scaleY) / 2 - tile.height / 2) 
+        tree.setPosition(0, tile.height + (tree.height * scaleY) / 2 - tile.height / 2)
     }
 
     update(dt) {

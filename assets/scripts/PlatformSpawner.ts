@@ -52,6 +52,7 @@ export default class NewClass extends cc.Component {
     // for next platform base on current platform
     generateRandomPlatformData(): PlatformData {
         let data: PlatformData = {
+            // shape: PlatformShape.HORIZONTAL,
             shape: Helpers.randomEnum(PlatformShape),
             tilesCount: 0,
             x: 0,

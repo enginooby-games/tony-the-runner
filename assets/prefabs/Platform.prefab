@@ -115,6 +115,11 @@
         "__uuid__": "55a8aab8-516a-4d4b-97fa-43b1f7678bfb"
       }
     ],
+    "enemyPrefabs": [
+      {
+        "__uuid__": "974adadf-1750-47a5-94c8-8415cb55a7dd"
+      }
+    ],
     "diamondOffsetMin": 100,
     "diamondOffsetMax": 200,
     "_id": ""

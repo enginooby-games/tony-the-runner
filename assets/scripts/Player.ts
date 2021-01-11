@@ -145,6 +145,10 @@ export default class Player extends cc.Component {
             && otherCollider.node.name != 'Dirt Tile') {
             this._isGrounded = true
         }
+
+        if(otherCollider.node.name === 'Spider') {
+            this._isGrounded = true
+        }
         // this._isGrounded = true
     }
 
