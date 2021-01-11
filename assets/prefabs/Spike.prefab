@@ -52,7 +52,7 @@
       "ctor": "Float64Array",
       "array": [
         0,
-        -63.917,
+        48,
         0,
         0,
         0,
@@ -135,7 +135,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3f719d3e-18e5-43fe-9ed1-015ecf70c986"
     },
     "fileId": "",
     "sync": false

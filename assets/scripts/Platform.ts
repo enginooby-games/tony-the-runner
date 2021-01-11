@@ -14,7 +14,8 @@ export default class Platform extends cc.Component {
     spikePrefab = null
     @property({ type: [cc.Prefab] })
     diamondPrefabs: cc.Prefab[] = []
-
+    @property({ type: [cc.Prefab] })
+    treePrefabs: cc.Prefab[] = []
 
     @property
     diamondOffsetMin: number = 100
@@ -80,41 +81,41 @@ export default class Platform extends cc.Component {
             if (i == data.tilesCount - 1) tile.name = "lastTile"
         }
 
-        this.createItems(data)
+        this.populatePlatforms(data)
 
 
     }
 
-    createItems(data: PlatformData) {
+    populatePlatforms(data: PlatformData) {
         this.node.children.forEach((tile: cc.Node) => {
-            const random: number = Math.random()
 
             switch (data.shape) {
                 case PlatformShape.HORIZONTAL:
                 case PlatformShape.DIAGONAL_DOWN:
                 case PlatformShape.DIAGONAL_UP:
                 case PlatformShape.ZIC_ZAC:
-                    // diamond occurrence: 40%
-                    if (random <= 0.4) {
-                        this.createDiamond(tile)
-                        // spike occurence: 15%
-                    } else if (0.4 < random && random < 0.55) {
-                        this.createSpike(tile)
-                    }
+                    this.populateTile(tile)
                     break
                 case PlatformShape.VERTICAL:
                     if (tile.name === "lastTile") {
-                        // diamond occurrence: 40%
-                        if (random <= 0.4) {
-                            this.createDiamond(tile)
-                            // spike occurence: 15%
-                        } else if (0.4 < random && random < 0.55) {
-                            this.createSpike(tile)
-                        }
+                        this.populateTile(tile)
                     }
                     break
             }
         })
+    }
+
+    populateTile(tile: cc.Node) {
+        const random: number = Math.random()
+
+        if (random <= 0.4) { // diamond occurrence: 40%
+            if (Math.random() <= 0.3) this.createTree(tile) // tree occurence on diamond tile: 30% 
+            this.createDiamond(tile)
+        } else if (0.4 < random && random < 0.55) {  // spike occurence: 15%
+            this.createSpike(tile)
+        } else {
+            if (Math.random() <= 0.5) this.createTree(tile) // tree occurence on empty tile: 50% 
+        }
     }
 
     createDiamond(tile: cc.Node) {
@@ -137,8 +138,15 @@ export default class Platform extends cc.Component {
 
     createSpike(tile: cc.Node) {
         const spike: cc.Node = cc.instantiate(this.spikePrefab)
-        spike.setPosition(0, 48)
+        // spike.setPosition(0, tile.height + spike.height / 2 - tile.height / 2)
         tile.addChild(spike)
+    }
+
+    createTree(tile: cc.Node) {
+        const randomIndex = Math.floor(Math.random() * (this.treePrefabs.length - 1))
+        const tree: cc.Node = cc.instantiate(this.treePrefabs[randomIndex])
+        // tree.setPosition(0, tile.height + tree.height / 2 - tile.height / 2) // pre-calculate position in prefabs to reduce calculations
+        tile.addChild(tree)
     }
 
     update(dt) {

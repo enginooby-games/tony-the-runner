@@ -13,7 +13,7 @@ export default class NewClass extends cc.Component {
     @property
     poolSize: number = 6
     @property
-    spawnInterval: number = 8
+    spawnInterval: number = 6
     @property({ type: [cc.Prefab] })
     cloudPrefabs: cc.Prefab[] = []
 
@@ -22,7 +22,11 @@ export default class NewClass extends cc.Component {
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {}
+    onLoad () {
+        this.schedule(function () {
+            this.createCloud()
+        }, this.spawnInterval, cc.macro.REPEAT_FOREVER, 0.1);
+    }
 
     randomBetween(min: number, max: number): number {
         return min + Math.random() * (max - min)
@@ -59,9 +63,7 @@ export default class NewClass extends cc.Component {
     }
 
     start() {
-        this.schedule(function () {
-            this.createCloud()
-        }, this.spawnInterval);
+        
     }
 
     update(dt) {
