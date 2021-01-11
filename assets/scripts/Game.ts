@@ -28,7 +28,7 @@ export default class Game extends cc.Component {
 
         this.enablePhysics();
         this.player.on('score', (amount: number) => {
-            cc.audioEngine.play(this.diamondSfx, false, 1)
+            cc.audioEngine.play(this.diamondSfx, false, 0.5)
             Globals.score += amount
             this.scoreLabel.string = Globals.score.toString()
         })

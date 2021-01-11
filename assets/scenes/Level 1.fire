@@ -785,6 +785,9 @@
     "jumpSprite": {
       "__uuid__": "4008cb7d-3590-4890-ae52-d5208f165300"
     },
+    "idleSprite": {
+      "__uuid__": "84e0c488-3811-443d-b9df-482999402700"
+    },
     "leftButton": {
       "__id__": 18
     },
@@ -797,6 +800,7 @@
     "healthBar": {
       "__id__": 25
     },
+    "runnerMode": 1,
     "_id": "51ZGBO/KdKFr/DRzZX1lRR"
   },
   {

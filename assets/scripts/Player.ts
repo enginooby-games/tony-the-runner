@@ -5,9 +5,14 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import { Globals } from "./Globals";
 import HealthBar from "./HealthBar";
 
 const { ccclass, property } = cc._decorator;
+enum RunnerMode {
+    AUTO,
+    MANUAL
+}
 
 @ccclass
 export default class Player extends cc.Component {
@@ -21,6 +26,8 @@ export default class Player extends cc.Component {
     maxJumpDistance: number = 300
     @property(cc.SpriteFrame)
     jumpSprite: cc.SpriteFrame = null
+    @property(cc.SpriteFrame)
+    idleSprite: cc.SpriteFrame = null
 
     @property(cc.Node)
     leftButton: cc.Node = null
@@ -30,6 +37,9 @@ export default class Player extends cc.Component {
     jumpButton: cc.Node = null
     @property(HealthBar)
     healthBar: HealthBar = null
+
+    @property
+    runnerMode: RunnerMode = RunnerMode.AUTO
 
     _animation: cc.Animation
     _sprite: cc.Sprite
@@ -146,7 +156,7 @@ export default class Player extends cc.Component {
             this._isGrounded = true
         }
 
-        if(otherCollider.node.name === 'Spider') {
+        if (otherCollider.node.name === 'Spider') {
             this._isGrounded = true
         }
         // this._isGrounded = true
@@ -208,8 +218,22 @@ export default class Player extends cc.Component {
 
     animate() {
         if (this._isGrounded) {
-            if (!this._animation.getAnimationState('Player@walking').isPlaying) {
-                this._animation.play('Player@walking')
+            if (this.runnerMode == RunnerMode.AUTO) {
+                if (!this._animation.getAnimationState('Player@walking').isPlaying) {
+                    this._animation.play('Player@walking')
+                }
+            } else {
+                if(this._rightKeyPressing || this._leftKeyPressing) {
+                    if (!this._animation.getAnimationState('Player@walking').isPlaying) {
+                        this._animation.play('Player@walking')
+                    }
+                } else {
+                    if (this._animation.getAnimationState('Player@walking').isPlaying) {
+                        this._animation.stop()
+                    }
+
+                    this._sprite.spriteFrame = this.idleSprite
+                }
             }
         } else {
             if (this._animation.getAnimationState('Player@walking').isPlaying) {
@@ -221,6 +245,11 @@ export default class Player extends cc.Component {
     }
 
     update(dt) {
+        if (this.runnerMode == RunnerMode.MANUAL) {
+            this.node.x -= Globals.speed * dt * 2
+            this.moveSpeed = (Globals.speed) * 2.7
+        }
+
         if (this._jumpKeyPressing) {
             this.jump();
         }
