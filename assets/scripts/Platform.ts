@@ -138,14 +138,15 @@ export default class Platform extends cc.Component {
 
     createSpike(tile: cc.Node) {
         const spike: cc.Node = cc.instantiate(this.spikePrefab)
-        // spike.setPosition(0, tile.height + spike.height / 2 - tile.height / 2)
+        // spike.setPosition(0, tile.height + spike.height / 2 - tile.height / 2) // pre-calculate position in prefabs to reduce calculations
         tile.addChild(spike)
     }
 
     createTree(tile: cc.Node) {
         const randomIndex = Math.floor(Math.random() * (this.treePrefabs.length - 1))
-        const tree: cc.Node = cc.instantiate(this.treePrefabs[randomIndex])
-        // tree.setPosition(0, tile.height + tree.height / 2 - tile.height / 2) // pre-calculate position in prefabs to reduce calculations
+        const tree: cc.Node = cc.instantiate(this.treePrefabs[2])
+        //tree.setScale(scale)
+        //tree.setPosition(0, tile.height + (tree.height * scale) / 2 - tile.height / 2) 
         tile.addChild(tree)
     }
 

@@ -7,6 +7,8 @@
 import { Globals } from "./Globals";
 import { PlatformShape, PlatformData } from './Types'
 import Platform from "./Platform";
+import Helpers from './Helpers'
+
 const { ccclass, property } = cc._decorator;
 let SCREEN_TOP_Y: number
 let SCREEN_BOTTOM_Y: number
@@ -50,7 +52,7 @@ export default class NewClass extends cc.Component {
     // for next platform base on current platform
     generateRandomPlatformData(): PlatformData {
         let data: PlatformData = {
-            shape: this.randomEnum(PlatformShape),
+            shape: Helpers.randomEnum(PlatformShape),
             tilesCount: 0,
             x: 0,
             y: 0
@@ -72,15 +74,7 @@ export default class NewClass extends cc.Component {
         return data
     }
 
-    randomEnum<T>(anEnum: T): T[keyof T] {
-        const enumValues = Object.keys(anEnum)
-            .map(n => Number.parseInt(n))
-            .filter(n => !Number.isNaN(n)) as unknown as T[keyof T][]
-        const randomIndex = Math.floor(Math.random() * enumValues.length)
-        const randomEnumValue = enumValues[randomIndex]
-        return randomEnumValue;
-    }
-
+   
     createPlatform() {
         // pool system: reuse last inactive platform to init new platform
         const lastInactivePlatform: cc.Node = this._platformPool.find(

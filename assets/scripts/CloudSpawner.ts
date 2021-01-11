@@ -6,6 +6,7 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
 import { Globals } from './Globals'
+import Helpers from './Helpers'
 const { ccclass, property } = cc._decorator;
 
 @ccclass
@@ -28,19 +29,12 @@ export default class NewClass extends cc.Component {
         }, this.spawnInterval, cc.macro.REPEAT_FOREVER, 0.1);
     }
 
-    randomBetween(min: number, max: number): number {
-        return min + Math.random() * (max - min)
-    }
-
-    randomIntBetween(min: number, max: number): number {
-        return min + Math.floor(Math.random() * (max - min))
-    }
 
     createCloud() {
         this.count++
 
         let cloud: cc.Node
-        const index = this.randomIntBetween(0, this.cloudPrefabs.length - 1)
+        const index = Helpers.randomIntBetween(0, this.cloudPrefabs.length - 1)
 
         if (this.count <= this.poolSize) {
             cloud = cc.instantiate(this.cloudPrefabs[index])
@@ -54,9 +48,9 @@ export default class NewClass extends cc.Component {
     }
 
     randomizeCloud(cloud: cc.Node) {
-        const y = this.randomBetween(cc.winSize.height / 2 - cloud.height / 5, cc.winSize.height / 2 - cloud.height / 1.25)
-        const scale = this.randomBetween(0.25, 0.5)
-        const opacity = this.randomIntBetween(135, 235)
+        const y = Helpers.randomBetween(cc.winSize.height / 2 - cloud.height / 5, cc.winSize.height / 2 - cloud.height / 1.25)
+        const scale = Helpers.randomBetween(0.25, 0.5)
+        const opacity = Helpers.randomIntBetween(135, 235)
         cloud.setPosition(cc.winSize.width / 2 + cloud.width / 2, y)
         cloud.setScale(scale, scale)
         cloud.opacity = opacity
