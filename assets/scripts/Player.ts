@@ -29,7 +29,7 @@ export default class Player extends cc.Component {
     @property(cc.Node)
     jumpButton: cc.Node = null
     @property(HealthBar)
-    healthBar:HealthBar = null
+    healthBar: HealthBar = null
 
     _animation: cc.Animation
     _sprite: cc.Sprite
@@ -54,13 +54,17 @@ export default class Player extends cc.Component {
         // this.node.parent.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this)
         // this.node.parent.on(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this)
 
+        const pressOpacity: number = 200
+        const releaseOpacity: number = 80
         if (this.leftButton) {
             this.leftButton.on(cc.Node.EventType.TOUCH_START, () => {
                 this._leftKeyPressing = true
                 this._rightKeyPressing = false
+                this.leftButton.opacity = pressOpacity
             }, this)
             this.leftButton.on(cc.Node.EventType.TOUCH_END, () => {
                 this._leftKeyPressing = false
+                this.leftButton.opacity = releaseOpacity
             }, this)
         }
 
@@ -68,19 +72,23 @@ export default class Player extends cc.Component {
             this.rightButton.on(cc.Node.EventType.TOUCH_START, () => {
                 this._rightKeyPressing = true
                 this._leftKeyPressing = false
+                this.rightButton.opacity = pressOpacity
             }, this)
             this.rightButton.on(cc.Node.EventType.TOUCH_END, () => {
                 this._rightKeyPressing = false
+                this.rightButton.opacity = releaseOpacity
             }, this)
         }
 
         if (this.jumpButton) {
             this.jumpButton.on(cc.Node.EventType.TOUCH_START, () => {
                 this._jumpKeyPressing = true
+                this.jumpButton.opacity = pressOpacity
             }, this)
             this.jumpButton.on(cc.Node.EventType.TOUCH_END, () => {
                 this._jumpKeyPressing = false
                 this._isJumping = false
+                this.jumpButton.opacity = releaseOpacity
             }, this)
         }
     }
@@ -143,7 +151,7 @@ export default class Player extends cc.Component {
     onEndContact(contact: cc.PhysicsContact, selfCollider: cc.PhysicsBoxCollider, otherCollider: cc.PhysicsBoxCollider) {
         if (otherCollider.node.name === 'lastTile') {
             this._isGrounded = false
-        } 
+        }
     }
 
     onCollisionEnter(other: cc.Collider, self: cc.Collider) {
@@ -183,7 +191,7 @@ export default class Player extends cc.Component {
     lostHealth() {
         this.health--
         this.healthBar.decrease()
-        
+
     }
 
     gainHealth() {
