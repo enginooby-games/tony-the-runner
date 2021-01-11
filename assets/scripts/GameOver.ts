@@ -12,9 +12,10 @@ const { ccclass, property } = cc._decorator;
 export default class NewClass extends cc.Component {
     @property(cc.Label)
     scoreLabel: cc.Label = null
+    @property(cc.Label)
+    bestScoreLabel: cc.Label = null
 
     onLoad() {
-        this.node.on(cc.Node.EventType.TOUCH_END, this.restart, this)
     }
 
     restart() {
@@ -24,7 +25,9 @@ export default class NewClass extends cc.Component {
     }
 
     start() {
+        Globals.bestScore = Math.max(Globals.score, Globals.bestScore)
         this.scoreLabel.string = `Score: ${Globals.score}`
+        this.bestScoreLabel.string = `Best: ${Globals.bestScore}`
     }
 
     // update (dt) {}
