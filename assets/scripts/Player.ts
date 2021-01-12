@@ -5,8 +5,9 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import ContinuousHeathBar from "./ContinuousHeathBar";
 import { Globals } from "./Globals";
-import HealthBar from "./HealthBar";
+import Helpers from "./Helpers";
 
 const { ccclass, property } = cc._decorator;
 enum RunnerMode {
@@ -17,9 +18,9 @@ enum RunnerMode {
 @ccclass
 export default class Player extends cc.Component {
     @property
-    health: number = 3
+    maxHealth: number = 10
     @property
-    jumpSpeed: cc.Vec2 = new cc.Vec2(0, 300)
+    jumpSpeed: cc.Vec2 = new cc.Vec2(0, 150)
     @property
     moveSpeed: number = 150
     @property
@@ -35,12 +36,13 @@ export default class Player extends cc.Component {
     rightButton: cc.Node = null
     @property(cc.Node)
     jumpButton: cc.Node = null
-    @property(HealthBar)
-    healthBar: HealthBar = null
+    @property(ContinuousHeathBar)
+    healthBar: ContinuousHeathBar = null
 
     @property
     runnerMode: RunnerMode = RunnerMode.AUTO
 
+    _heath: number
     _animation: cc.Animation
     _sprite: cc.Sprite
     _rigidBody: cc.RigidBody
@@ -53,7 +55,8 @@ export default class Player extends cc.Component {
     _startJumpY: number
 
     onLoad() {
-        this.healthBar.init(this.health)
+        this._heath = this.maxHealth
+        // this.healthBar.init(this.health)
 
         this._animation = this.getComponent(cc.Animation)
         this._sprite = this.getComponent(cc.Sprite)
@@ -168,6 +171,7 @@ export default class Player extends cc.Component {
         }
     }
 
+    _beingDamaged: boolean
     onCollisionEnter(other: cc.Collider, self: cc.Collider) {
         switch (other.node.name) {
             case 'Diamond I':
@@ -183,13 +187,14 @@ export default class Player extends cc.Component {
                 other.node.destroy()
                 break
             case 'Spike':
-                this.node.color = new cc.Color(255, 0, 0)
-
-                if (this.health > 1) {
-                    this.lostHealth()
-                } else {
-                    this.node.emit('die')
-                }
+                this._beingDamaged = true
+                this.getDamaged(-1) // kick-off immediately
+                const interval = setInterval(() => {
+                    this.getDamaged(-1);
+                    if (!this._beingDamaged) {
+                        clearInterval(interval)
+                    }
+                }, 500);
                 break
         }
     }
@@ -197,20 +202,26 @@ export default class Player extends cc.Component {
     onCollisionExit(other: cc.Collider, self: cc.Collider) {
         switch (other.node.name) {
             case 'Spike':
-                this.node.color = new cc.Color(255, 255, 255)
+                this._beingDamaged = false
                 break
         }
     }
 
-    lostHealth() {
-        this.health--
-        this.healthBar.decrease()
-
+    updateHealth(amount: number) {
+        this._heath += amount
+        if (this._heath > 0) {
+            const heathPercent = this._heath * 100 / this.maxHealth
+            this.healthBar.updateOnChange(heathPercent)
+        } else {
+            this.node.emit('die')
+        }
     }
 
-    gainHealth() {
-        this.health++
-        this.healthBar.increase()
+    getDamaged(amount: number) {
+        if(!this._beingDamaged) return
+        const red: cc.Color = new cc.Color(255, 0, 0)
+        Helpers.blink(this, red)
+        this.updateHealth(amount)
     }
 
     start() {
@@ -223,7 +234,7 @@ export default class Player extends cc.Component {
                     this._animation.play('Player@walking')
                 }
             } else {
-                if(this._rightKeyPressing || this._leftKeyPressing) {
+                if (this._rightKeyPressing || this._leftKeyPressing) {
                     if (!this._animation.getAnimationState('Player@walking').isPlaying) {
                         this._animation.play('Player@walking')
                     }

@@ -16,4 +16,13 @@ export default class Helpers {
         return randomEnumValue;
     }
 
+    
+    static blink(component: cc.Component, color: cc.Color) {
+        component.node.color = color
+
+        component.scheduleOnce(function () {
+            this.node.color = new cc.Color(255, 255, 255)
+        }, 0.1);
+    }
+
 }

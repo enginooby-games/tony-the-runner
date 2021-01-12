@@ -3,7 +3,7 @@
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class HealthBar extends cc.Component {
+export default class DiscreteHealthBar extends cc.Component {
     @property(cc.Prefab)
     heartPrefab = null
 
