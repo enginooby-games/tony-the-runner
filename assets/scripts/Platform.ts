@@ -10,7 +10,7 @@ export default class Platform extends cc.Component {
     @property(cc.Prefab)
     dirtGrassPrefab = null;
     @property(cc.Prefab)
-    dirtPrefab = null;
+    dirtPrefab: cc.Prefab = null; //fill tile
     @property(cc.Prefab)
     spikePrefab = null
     @property({ type: [cc.Prefab] })
@@ -85,11 +85,14 @@ export default class Platform extends cc.Component {
         }
 
         this.populateTiles(data)
+        this.fillPlatform(data)
+        // this.fillHorizontalBottom(data)
     }
 
     populateTiles(data: PlatformData) {
-        for (let i = 0; i < this.node.childrenCount; i++) {
+        for (let i = 0; i < data.tilesCount; i++) {
             const tile: cc.Node = this.node.children[i]
+            // if (tile.name === 'fillTile') return // don't need to populate fill tiles
 
             switch (data.shape) {
                 case PlatformShape.HORIZONTAL:
@@ -117,7 +120,55 @@ export default class Platform extends cc.Component {
                 this.createEnemy(tile)
             }
         }
+    }
 
+    // fill only first and last tile due to performance issue
+    fillPlatform(data: PlatformData) {
+        for (let i = 0; i < data.tilesCount; i++) {
+            const tile: cc.Node = this.node.children[i]
+
+            if (data.shape === PlatformShape.VERTICAL && i === 0) {
+                this.fillTillBottom(tile)
+            } else {
+                if (i === 0 || i === data.tilesCount - 1)
+                    this.fillTillBottom(tile)
+            }
+        }
+    }
+
+    fillTile(x: number, y: number): cc.Node {
+        const filledTile: cc.Node = cc.instantiate(this.dirtPrefab);
+        this.node.addChild(filledTile)
+        filledTile.setPosition(x, y)
+
+        return filledTile
+    }
+
+    fillTillBottom(tile: cc.Node) {
+        const yToBottom: number = tile.y + cc.winSize.height / 2
+        const tileAmount: number = yToBottom / this.dirtPrefab.data.height - 2
+
+        for (let i = 0; i < tileAmount; i++) {
+            this.fillTile(tile.x, tile.y - (i + 1) * this.dirtPrefab.data.height)
+            // fillTile.name = "fillTile"
+        }
+    }
+
+    // TODO
+    fillHorizontalBottom(data: PlatformData) {
+        if (data.tilesCount < 3 || data.shape === PlatformShape.VERTICAL) return // since first and last tile are already filled till bottom
+
+        switch (data.shape) {
+            case PlatformShape.HORIZONTAL:
+            case PlatformShape.DIAGONAL_UP:
+            case PlatformShape.ZIC_ZAC:
+                const yToBottom: number = data.y + cc.winSize.height / 2 -124
+                this.fillTile(64, yToBottom).color = new cc.Color(255, 0, 0)
+                // console.log(yToBottom)
+                break
+            case PlatformShape.DIAGONAL_DOWN:
+                break
+        }
     }
 
     populateTile(tile: cc.Node) {
@@ -185,6 +236,9 @@ export default class Platform extends cc.Component {
         // this.node.x -= 50 * dt;
         // this.node.children.forEach((child: cc.Node) => child.getComponent(cc.RigidBody).syncPosition(true))
         this.node.children.forEach((child: cc.Node) => child.x -= Globals.speed * dt)
+        // this.node.children.forEach((child: cc.Node) => child.children.forEach((grandchild:cc.Node)=>{
+        //     grandchild.x -= Globals.speed * dt / 2
+        // }))
         if (this.node.x < 0 - this.node.width) {
             this._active = false
         }

@@ -658,7 +658,7 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        382.649,
+        427.223,
         223.916,
         0,
         0,
@@ -800,7 +800,6 @@
     "healthBar": {
       "__id__": 25
     },
-    "runnerMode": 1,
     "_id": "51ZGBO/KdKFr/DRzZX1lRR"
   },
   {
