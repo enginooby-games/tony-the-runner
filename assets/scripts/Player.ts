@@ -8,12 +8,9 @@
 import ContinuousHeathBar from "./ContinuousHeathBar";
 import { Globals } from "./Globals";
 import Helpers from "./Helpers";
+import { RunnerMode } from "./Types";
 
 const { ccclass, property } = cc._decorator;
-enum RunnerMode {
-    AUTO,
-    MANUAL
-}
 
 @ccclass
 export default class Player extends cc.Component {
@@ -39,8 +36,8 @@ export default class Player extends cc.Component {
     @property(ContinuousHeathBar)
     healthBar: ContinuousHeathBar = null
 
-    @property
-    runnerMode: RunnerMode = RunnerMode.AUTO
+    // @property
+    // runnerMode: RunnerMode = RunnerMode.AUTO
 
     _heath: number
     _animation: cc.Animation
@@ -229,7 +226,7 @@ export default class Player extends cc.Component {
 
     animate() {
         if (this._isGrounded) {
-            if (this.runnerMode == RunnerMode.AUTO) {
+            if (Globals.runnerMode == RunnerMode.AUTO) {
                 if (!this._animation.getAnimationState('Player@walking').isPlaying) {
                     this._animation.play('Player@walking')
                 }
@@ -256,7 +253,7 @@ export default class Player extends cc.Component {
     }
 
     update(dt) {
-        if (this.runnerMode == RunnerMode.MANUAL) {
+        if (Globals.runnerMode == RunnerMode.MANUAL) {
             this.node.x -= Globals.speed * dt * 2
             this.moveSpeed = (Globals.speed + 15) * 2.5
         }

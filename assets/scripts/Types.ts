@@ -12,3 +12,8 @@ export enum PlatformShape {
     DIAGONAL_DOWN,
     ZIC_ZAC
 }
+
+export enum RunnerMode {
+    AUTO,
+    MANUAL
+}
