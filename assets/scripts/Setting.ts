@@ -25,11 +25,14 @@ export default class NewClass extends cc.Component {
     @property(cc.Sprite)
     manualBox: cc.Sprite = null
 
+    @property(cc.Button)
+    playButton: cc.Button = null
+
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
+    onLoad() {
         this.autoBox.node.on(cc.Node.EventType.TOUCH_START, () => {
-            if(Globals.runnerMode === RunnerMode.AUTO) return
+            if (Globals.runnerMode === RunnerMode.AUTO) return
 
             this.autoBox.spriteFrame = this.tickedBoxSprite
             this.manualBox.spriteFrame = this.untickedBoxSprite
@@ -37,11 +40,18 @@ export default class NewClass extends cc.Component {
         }, this)
 
         this.manualBox.node.on(cc.Node.EventType.TOUCH_START, () => {
-            if(Globals.runnerMode === RunnerMode.MANUAL) return
+            if (Globals.runnerMode === RunnerMode.MANUAL) return
 
             this.autoBox.spriteFrame = this.untickedBoxSprite
             this.manualBox.spriteFrame = this.tickedBoxSprite
             Globals.runnerMode = RunnerMode.MANUAL
+        }, this)
+
+        this.playButton.node.on(cc.Node.EventType.TOUCH_START, () => {
+            const label: cc.Label = this.playButton.node.getComponentInChildren(cc.Label)
+            label.fontSize = 30
+            label.string = "Loading..."
+            this.startGame()
         }, this)
     }
 
@@ -49,7 +59,7 @@ export default class NewClass extends cc.Component {
 
     }
 
-    startGame(){
+    startGame() {
         cc.director.loadScene('Level 1')
     }
 

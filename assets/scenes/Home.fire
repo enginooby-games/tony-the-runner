@@ -102,19 +102,19 @@
         "__id__": 23
       },
       {
-        "__id__": 29
+        "__id__": 28
       }
     ],
     "_active": true,
     "_components": [
       {
+        "__id__": 31
+      },
+      {
         "__id__": 32
       },
       {
         "__id__": 33
-      },
-      {
-        "__id__": 34
       }
     ],
     "_prefab": null,
@@ -1331,11 +1331,7 @@
     "_grayMaterial": null,
     "duration": 0.1,
     "zoomScale": 1.2,
-    "clickEvents": [
-      {
-        "__id__": 28
-      }
-    ],
+    "clickEvents": [],
     "_N$interactable": true,
     "_N$enableAutoGrayEffect": false,
     "_N$transition": 1,
@@ -1394,16 +1390,6 @@
     "_id": "48LQqs1J1GdbbMOEXaDBos"
   },
   {
-    "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 2
-    },
-    "component": "",
-    "_componentId": "d43c4pTnitHuabV2udVuGIJ",
-    "handler": "startGame",
-    "customEventData": ""
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Cloud Spawner",
     "_objFlags": 0,
@@ -1414,11 +1400,11 @@
     "_active": false,
     "_components": [
       {
-        "__id__": 30
+        "__id__": 29
       }
     ],
     "_prefab": {
-      "__id__": 31
+      "__id__": 30
     },
     "_opacity": 255,
     "_color": {
@@ -1472,7 +1458,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 29
+      "__id__": 28
     },
     "_enabled": true,
     "poolSize": 8,
@@ -1508,7 +1494,7 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 29
+      "__id__": 28
     },
     "asset": {
       "__uuid__": "2232e587-fad0-4556-b5c5-d6b020e36673"
@@ -1579,6 +1565,9 @@
     },
     "manualBox": {
       "__id__": 20
+    },
+    "playButton": {
+      "__id__": 27
     },
     "_id": "b2lZGynhhOtpByEbjoIxBu"
   }
