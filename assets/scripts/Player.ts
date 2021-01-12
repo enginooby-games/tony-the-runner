@@ -148,18 +148,20 @@ export default class Player extends cc.Component {
     // }
 
     onBeginContact(contact: cc.PhysicsContact, selfCollider: cc.PhysicsBoxCollider, otherCollider: cc.PhysicsBoxCollider) {
-        const worldManifold: cc.WorldManifold = contact.getWorldManifold();
+        // TODO: figure out the position of the collision
+        
+        // const worldManifold: cc.WorldManifold = contact.getWorldManifold();
 
-        // if contact height is greater than top Y of the platform
-        if (worldManifold.points[0].y >= otherCollider.node.parent.y + 320
-            && otherCollider.node.name != 'Dirt Tile') {
-            this._isGrounded = true
-        }
+        // // if contact height is greater than top Y of the platform
+        // if (worldManifold.points[0].y >= otherCollider.node.parent.y + 320
+        //     && otherCollider.node.name != 'Dirt Tile') {
+        //     this._isGrounded = true
+        // }
 
-        if (otherCollider.node.name === 'Spider') {
-            this._isGrounded = true
-        }
-        // this._isGrounded = true
+        // if (otherCollider.node.name === 'Spider') {
+        //     this._isGrounded = true
+        // }
+        this._isGrounded = true
     }
 
     onEndContact(contact: cc.PhysicsContact, selfCollider: cc.PhysicsBoxCollider, otherCollider: cc.PhysicsBoxCollider) {

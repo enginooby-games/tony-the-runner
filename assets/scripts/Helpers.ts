@@ -16,13 +16,24 @@ export default class Helpers {
         return randomEnumValue;
     }
 
-    
+
     static blink(component: cc.Component, color: cc.Color) {
         component.node.color = color
 
         component.scheduleOnce(function () {
             this.node.color = new cc.Color(255, 255, 255)
         }, 0.1);
+    }
+
+    static moveChildrentX(node: cc.Node, speed: number) {
+        node.children.forEach((child: cc.Node) => child.x += speed)
+    }
+
+    // move a node which also contains childrent having rigid body component 
+    static moveWithRigidChildrentX(node: cc.Node, speed: number) {
+        node.x += speed
+        // sync position for rigid-body child nodes
+        node.children.forEach((child: cc.Node) => child.getComponent(cc.RigidBody)?.syncPosition(true))
     }
 
 }
