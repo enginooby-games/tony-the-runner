@@ -218,7 +218,7 @@ export default class Player extends cc.Component {
     }
 
     getDamaged(amount: number) {
-        if(!this._beingDamaged) return
+        if (!this._beingDamaged) return
         const red: cc.Color = new cc.Color(255, 0, 0)
         Helpers.blink(this, red)
         this.updateHealth(amount)
@@ -258,7 +258,7 @@ export default class Player extends cc.Component {
     update(dt) {
         if (this.runnerMode == RunnerMode.MANUAL) {
             this.node.x -= Globals.speed * dt * 2
-            this.moveSpeed = (Globals.speed) * 2.7
+            this.moveSpeed = (Globals.speed + 15) * 2.5
         }
 
         if (this._jumpKeyPressing) {
@@ -294,7 +294,7 @@ export default class Player extends cc.Component {
         } else if (this._isJumping && !this._maxJumpDistanceReached) {
             const jumpDistance = this.node.y - this._startJumpY;
             //  if jump distance is not maximum
-            if (jumpDistance < this.maxJumpDistance && this.node.y < cc.winSize.height / 2 - 130) {
+            if (jumpDistance < this.maxJumpDistance && this.node.y < cc.winSize.height / 2 - 70) {
                 //  keep player's Y speed
                 this._rigidBody.linearVelocity = this.jumpSpeed;
             } else {
