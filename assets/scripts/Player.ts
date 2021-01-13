@@ -163,11 +163,14 @@ export default class Player extends cc.Component {
         //     this._isGrounded = true
         // }
         this._isGrounded = true
+        // this.node.angle = cc.misc.lerp(this.node.angle, 0, 0.1)
+
     }
 
     onEndContact(contact: cc.PhysicsContact, selfCollider: cc.PhysicsBoxCollider, otherCollider: cc.PhysicsBoxCollider) {
         if (otherCollider.node.name === 'lastTile') {
             this._isGrounded = false
+            this._rigidBody.fixedRotation = false
         }
     }
 
@@ -179,11 +182,11 @@ export default class Player extends cc.Component {
                 other.node.destroy()
                 break
             case 'Diamond II':
-                this.node.emit('score', 5)
+                this.node.emit('score', 10)
                 other.node.destroy()
                 break
             case 'Diamond III':
-                this.node.emit('score', 20)
+                this.node.emit('score', 50)
                 other.node.destroy()
                 break
             case 'Spike':
@@ -282,6 +285,7 @@ export default class Player extends cc.Component {
     }
 
     update(dt) {
+       
 
         if (Globals.runnerMode == RunnerMode.MANUAL) {
             this.node.x -= Globals.speed * dt * 2

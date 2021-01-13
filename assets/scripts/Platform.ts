@@ -23,6 +23,8 @@ export default class Platform extends cc.Component {
     treePrefabs: cc.Prefab[] = []
     @property({ type: [cc.Prefab] })
     enemyPrefabs: cc.Prefab[] = []
+    @property({ type: [cc.Prefab] })
+    flyingEnemyPrefabs: cc.Prefab[] = []
 
     @property
     itemOffsetMin: number = 100
@@ -115,16 +117,23 @@ export default class Platform extends cc.Component {
 
 
             /* POPULATE ON SPECIFIC TILES */
-
             // ENEMY
-            const random: number = Math.random()
+            const random1: number = Math.random()
             // % on last tile of horizontal platform
-            if (data.shape == PlatformShape.HORIZONTAL && i === this.node.childrenCount - 1 && random < 0.5) {
-                this.createEnemy(tile)
+            if (data.shape === PlatformShape.HORIZONTAL && i === this.node.childrenCount - 1) {
+                if (random1 < 0.5) {
+                    this.createEnemy(tile)
+                } else {
+                    // this.createFlyingEnemy(tile)
+                }
             }
             // % on last tile of up diagonal platform
-            if (data.shape == PlatformShape.DIAGONAL_UP && i === this.node.childrenCount - 1 && random < 0.3) {
+            if (data.shape === PlatformShape.DIAGONAL_UP && i === this.node.childrenCount - 1 && random1 < 0.3) {
                 this.createEnemy(tile)
+            }
+
+            if (data.shape !== PlatformShape.VERTICAL && Math.random() < 0.2) {
+                this.createFlyingEnemy(tile)
             }
 
             // HEART & SHIELD
@@ -132,7 +141,7 @@ export default class Platform extends cc.Component {
             // % on first tile
             if (i === 0 && random2 < 0.15) {
                 this.createHeart(tile)
-            } else if (i === 0 && 0.15 < random2 && random2 < 0.3){
+            } else if (i === 0 && 0.15 < random2 && random2 < 0.3) {
                 this.createShield(tile)
             }
         }
@@ -221,11 +230,11 @@ export default class Platform extends cc.Component {
     createDiamond(tile: cc.Node) {
         const random: number = Math.random()
         let diamondTypeIndex: number = null
-        if (random <= 0.7) {    // diamond 1 probability: 70%
+        if (random <= 0.8) {    // diamond I probability: 80%
             diamondTypeIndex = 0
-        } else if (0.7 < random && random < 0.95) {  // diamond 5 probability: 25%
+        } else if (0.8 < random && random < 0.97) {  // diamond II probability: 17%
             diamondTypeIndex = 1
-        } else {    // diamond 10 probability: 5% 
+        } else {    // diamond III probability: 3% 
             diamondTypeIndex = 2
         }
 
@@ -241,6 +250,13 @@ export default class Platform extends cc.Component {
         const enemy: cc.Node = cc.instantiate(this.enemyPrefabs[randomIndex])
         enemy.setPosition(0, tile.height + enemy.height / 2 - enemy.height / 2) // pre-calculate position in prefabs to reduce calculations
         tile.addChild(enemy)
+    }
+
+    createFlyingEnemy(tile: cc.Node) {
+        const randomIndex = Helpers.randomIntBetween(0, this.flyingEnemyPrefabs.length - 1)
+        const flyingEnemy: cc.Node = cc.instantiate(this.flyingEnemyPrefabs[randomIndex])
+        flyingEnemy.setPosition(0, 100) // pre-calculate position in prefabs to reduce calculations
+        tile.addChild(flyingEnemy)
     }
 
     createSpike(tile: cc.Node) {

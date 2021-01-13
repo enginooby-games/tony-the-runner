@@ -126,6 +126,11 @@
         "__uuid__": "974adadf-1750-47a5-94c8-8415cb55a7dd"
       }
     ],
+    "flyingEnemyPrefabs": [
+      {
+        "__uuid__": "e3ca594d-d8b7-48f9-bc95-ea4bed69e7f4"
+      }
+    ],
     "itemOffsetMin": 100,
     "itemOffsetMax": 200,
     "_id": ""
