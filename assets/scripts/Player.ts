@@ -35,6 +35,8 @@ export default class Player extends cc.Component {
     jumpButton: cc.Node = null
     @property(ContinuousHeathBar)
     healthBar: ContinuousHeathBar = null
+    @property(cc.Node)
+    sheildAura: cc.Node = null
 
     // @property
     // runnerMode: RunnerMode = RunnerMode.AUTO
@@ -50,11 +52,10 @@ export default class Player extends cc.Component {
     _maxJumpDistanceReached: boolean
     _isGrounded: boolean = false
     _startJumpY: number
+    _shieldDuration: number = 0
 
     onLoad() {
         this._heath = this.maxHealth
-        // this.healthBar.init(this.health)
-
         this._animation = this.getComponent(cc.Animation)
         this._sprite = this.getComponent(cc.Sprite)
         this._rigidBody = this.getComponent(cc.RigidBody)
@@ -199,6 +200,11 @@ export default class Player extends cc.Component {
                 this.updateHealth(1)
                 other.node.destroy()
                 break
+            case 'Shield':
+                this.enableShield(5)
+                this.schedule(this.countdownShield, 1)
+                other.node.destroy()
+                break
         }
     }
 
@@ -207,6 +213,24 @@ export default class Player extends cc.Component {
             case 'Spike':
                 this._beingDamaged = false
                 break
+        }
+    }
+
+    enableShield(duration: number) {
+        this.sheildAura.active = true
+        this._shieldDuration = duration
+    }
+
+    disableShield() {
+        this.sheildAura.active = false
+    }
+
+    countdownShield() {
+        this._shieldDuration--;
+        cc.log(this._shieldDuration)
+        if (this._shieldDuration === 0) {
+            this.disableShield()
+            this.unschedule(this.countdownShield)
         }
     }
 
@@ -221,7 +245,7 @@ export default class Player extends cc.Component {
     }
 
     getDamaged(amount: number) {
-        if (!this._beingDamaged) return
+        if (!this._beingDamaged || this._shieldDuration > 0) return
         const red: cc.Color = new cc.Color(255, 0, 0)
         Helpers.blink(this, red)
         this.updateHealth(amount)
@@ -259,6 +283,7 @@ export default class Player extends cc.Component {
     }
 
     update(dt) {
+
         if (Globals.runnerMode == RunnerMode.MANUAL) {
             this.node.x -= Globals.speed * dt * 2
             this.moveSpeed = (Globals.speed + 20) * 2.3

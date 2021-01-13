@@ -2,7 +2,9 @@
   "title": "tonys-endless-adventure",
   "packageName": "org.cocos2d.demo",
   "startScene": "854f8fdd-f217-496d-ac32-215d5ed4741b",
-  "excludeScenes": [],
+  "excludeScenes": [
+    "ac44d5b1-5044-4f7b-ab81-beb9bcb6a159"
+  ],
   "orientation": {
     "landscapeLeft": true,
     "landscapeRight": true,
