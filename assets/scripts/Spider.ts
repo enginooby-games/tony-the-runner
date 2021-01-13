@@ -17,7 +17,7 @@ export default class NewClass extends cc.Component {
     // onLoad () {}
 
     start() {
-        this._scale = Helpers.randomBetween(0.4, 0.7)
+        this._scale = Helpers.randomBetween(0.3, 0.7)
         this._speed = Helpers.randomBetween(10, 40)
 
         this.node.scale = this._scale

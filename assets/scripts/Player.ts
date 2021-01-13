@@ -170,7 +170,6 @@ export default class Player extends cc.Component {
     onEndContact(contact: cc.PhysicsContact, selfCollider: cc.PhysicsBoxCollider, otherCollider: cc.PhysicsBoxCollider) {
         if (otherCollider.node.name === 'lastTile') {
             this._isGrounded = false
-            this._rigidBody.fixedRotation = false
         }
     }
 
@@ -285,7 +284,13 @@ export default class Player extends cc.Component {
     }
 
     update(dt) {
-       
+        // this.node.angle = cc.misc.clampf(this.node.angle, -20, 20)
+        if(this._isGrounded){
+            // this._rigidBody.fixedRotation = true
+            // const currentAng = this.node.angle
+            // this.node.angle = cc.misc.lerp(currentAng, 0, 0.2)
+            this.node.angle = 0
+        }
 
         if (Globals.runnerMode == RunnerMode.MANUAL) {
             this.node.x -= Globals.speed * dt * 2
