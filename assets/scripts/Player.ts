@@ -195,6 +195,10 @@ export default class Player extends cc.Component {
                     }
                 }, 500);
                 break
+            case 'Heart':
+                this.updateHealth(1)
+                other.node.destroy()
+                break
         }
     }
 
@@ -207,7 +211,7 @@ export default class Player extends cc.Component {
     }
 
     updateHealth(amount: number) {
-        this._heath += amount
+        this._heath = Math.min(this._heath + amount, this.maxHealth)
         if (this._heath > 0) {
             const heathPercent = this._heath * 100 / this.maxHealth
             this.healthBar.updateOnChange(heathPercent)
