@@ -15,6 +15,8 @@ export default class Platform extends cc.Component {
     spikePrefab = null
     @property(cc.Prefab)
     heartPrefab = null
+    @property(cc.Prefab)
+    shieldPrefab = null
     @property({ type: [cc.Prefab] })
     diamondPrefabs: cc.Prefab[] = []
     @property({ type: [cc.Prefab] })
@@ -125,10 +127,13 @@ export default class Platform extends cc.Component {
                 this.createEnemy(tile)
             }
 
-            // HEART
-            // % on first tile (independently)
-            if (i === 0 && Math.random() <= 0.15) {
+            // HEART & SHIELD
+            const random2: number = Math.random()
+            // % on first tile
+            if (i === 0 && random2 < 0.15) {
                 this.createHeart(tile)
+            } else if (i === 0 && 0.15 < random2 && random2 < 0.3){
+                this.createShield(tile)
             }
         }
     }
@@ -202,6 +207,15 @@ export default class Platform extends cc.Component {
         const offsetY: number = Helpers.randomBetween(this.itemOffsetMin, this.itemOffsetMax)
         heart.setPosition(offsetX, offsetY)
         tile.addChild(heart)
+    }
+
+    createShield(tile: cc.Node) {
+        const shield: cc.Node = cc.instantiate(this.shieldPrefab)
+
+        const offsetX: number = Helpers.randomBetween(-TILE_SIZE * 4, 0) // left side of tile
+        const offsetY: number = Helpers.randomBetween(this.itemOffsetMin, this.itemOffsetMax)
+        shield.setPosition(offsetX, offsetY)
+        tile.addChild(shield)
     }
 
     createDiamond(tile: cc.Node) {

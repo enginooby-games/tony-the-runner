@@ -201,7 +201,7 @@ export default class Player extends cc.Component {
                 other.node.destroy()
                 break
             case 'Shield':
-                this.enableShield(5)
+                this.enableShield(7)
                 this.schedule(this.countdownShield, 1)
                 other.node.destroy()
                 break
@@ -227,7 +227,6 @@ export default class Player extends cc.Component {
 
     countdownShield() {
         this._shieldDuration--;
-        cc.log(this._shieldDuration)
         if (this._shieldDuration === 0) {
             this.disableShield()
             this.unschedule(this.countdownShield)

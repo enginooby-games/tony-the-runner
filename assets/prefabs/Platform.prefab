@@ -96,6 +96,9 @@
     "heartPrefab": {
       "__uuid__": "49cf6592-da19-469c-8820-66d15138bfa9"
     },
+    "shieldPrefab": {
+      "__uuid__": "7e743c09-0fd6-4168-9a0b-90265d6e8f46"
+    },
     "diamondPrefabs": [
       {
         "__uuid__": "42694c5c-789e-485b-a365-3cd2329470ec"
