@@ -93,6 +93,9 @@
     "spikePrefab": {
       "__uuid__": "3f719d3e-18e5-43fe-9ed1-015ecf70c986"
     },
+    "heartPrefab": {
+      "__uuid__": "49cf6592-da19-469c-8820-66d15138bfa9"
+    },
     "diamondPrefabs": [
       {
         "__uuid__": "42694c5c-789e-485b-a365-3cd2329470ec"
@@ -120,8 +123,8 @@
         "__uuid__": "974adadf-1750-47a5-94c8-8415cb55a7dd"
       }
     ],
-    "diamondOffsetMin": 100,
-    "diamondOffsetMax": 200,
+    "itemOffsetMin": 100,
+    "itemOffsetMax": 200,
     "_id": ""
   },
   {

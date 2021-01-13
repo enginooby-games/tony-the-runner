@@ -13,6 +13,8 @@ export default class Platform extends cc.Component {
     dirtPrefab: cc.Prefab = null; //fill tile
     @property(cc.Prefab)
     spikePrefab = null
+    @property(cc.Prefab)
+    heartPrefab = null
     @property({ type: [cc.Prefab] })
     diamondPrefabs: cc.Prefab[] = []
     @property({ type: [cc.Prefab] })
@@ -21,9 +23,9 @@ export default class Platform extends cc.Component {
     enemyPrefabs: cc.Prefab[] = []
 
     @property
-    diamondOffsetMin: number = 100
+    itemOffsetMin: number = 100
     @property
-    diamondOffsetMax: number = 200
+    itemOffsetMax: number = 200
 
     _active: boolean // whether visible on the screen
     // onLoad () {}
@@ -109,15 +111,24 @@ export default class Platform extends cc.Component {
                     break
             }
 
-            // populate emeny
+
+            /* POPULATE ON SPECIFIC TILES */
+
+            // ENEMY
             const random: number = Math.random()
-            // 50% on last tile of horizontal platform
+            // % on last tile of horizontal platform
             if (data.shape == PlatformShape.HORIZONTAL && i === this.node.childrenCount - 1 && random < 0.5) {
                 this.createEnemy(tile)
             }
-            // 30% on last tile of up diagonal platform
+            // % on last tile of up diagonal platform
             if (data.shape == PlatformShape.DIAGONAL_UP && i === this.node.childrenCount - 1 && random < 0.3) {
                 this.createEnemy(tile)
+            }
+
+            // HEART
+            // % on first tile (independently)
+            if (i === 0 && Math.random() <= 0.15) {
+                this.createHeart(tile)
             }
         }
     }
@@ -162,7 +173,7 @@ export default class Platform extends cc.Component {
             case PlatformShape.HORIZONTAL:
             case PlatformShape.DIAGONAL_UP:
             case PlatformShape.ZIC_ZAC:
-                const yToBottom: number = data.y + cc.winSize.height / 2 -124
+                const yToBottom: number = data.y + cc.winSize.height / 2 - 124
                 this.fillTile(64, yToBottom).color = new cc.Color(255, 0, 0)
                 // console.log(yToBottom)
                 break
@@ -182,7 +193,15 @@ export default class Platform extends cc.Component {
         } else {
             if (Math.random() <= 0.5) this.createTree(tile) // tree occurence on empty tile: 50% 
         }
+    }
 
+    createHeart(tile: cc.Node) {
+        const heart: cc.Node = cc.instantiate(this.heartPrefab)
+
+        const offsetX: number = Helpers.randomBetween(-TILE_SIZE * 4, 0) // left side of tile
+        const offsetY: number = Helpers.randomBetween(this.itemOffsetMin, this.itemOffsetMax)
+        heart.setPosition(offsetX, offsetY)
+        tile.addChild(heart)
     }
 
     createDiamond(tile: cc.Node) {
@@ -198,7 +217,7 @@ export default class Platform extends cc.Component {
 
         const diamond: cc.Node = cc.instantiate(this.diamondPrefabs[diamondTypeIndex])
 
-        const offsetY: number = this.diamondOffsetMin + Math.random() * (this.diamondOffsetMax - this.diamondOffsetMin)
+        const offsetY: number = Helpers.randomBetween(this.itemOffsetMin, this.itemOffsetMax)
         diamond.setPosition(0, offsetY)
         tile.addChild(diamond)
     }
