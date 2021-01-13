@@ -5,18 +5,27 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
-import { Globals } from "./Globals";
-import Helpers from './Helpers';
 const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class NewClass extends cc.Component {
-    update(dt) {
-        Helpers.moveWithRigidChildrentX(this.node, -Globals.speed * 2 * dt)
-        if (this.node.x <= - cc.winSize.width) {
-            this.node.destroy()
-        }
 
-        // cc.log(this.node.x)
+    @property(cc.Node)
+    player: cc.Node = null
+
+
+    start() {
+
+    }
+
+    update(dt) {
+        const currentPos = this.node.getPosition()
+        const playerPos = this.player.getPosition()
+
+        playerPos.y = cc.misc.clampf(playerPos.y, 0, 100)
+        currentPos.lerp(playerPos, 0.1, currentPos)
+
+        this.node.y = currentPos.y
+        // this.node.setPosition(currentPos)
     }
 }

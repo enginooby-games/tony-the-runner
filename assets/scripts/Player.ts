@@ -149,7 +149,7 @@ export default class Player extends cc.Component {
 
     onBeginContact(contact: cc.PhysicsContact, selfCollider: cc.PhysicsBoxCollider, otherCollider: cc.PhysicsBoxCollider) {
         // TODO: figure out the position of the collision
-        
+
         // const worldManifold: cc.WorldManifold = contact.getWorldManifold();
 
         // // if contact height is greater than top Y of the platform
@@ -257,7 +257,7 @@ export default class Player extends cc.Component {
     update(dt) {
         if (Globals.runnerMode == RunnerMode.MANUAL) {
             this.node.x -= Globals.speed * dt * 2
-            this.moveSpeed = (Globals.speed + 15) * 2.5
+            this.moveSpeed = (Globals.speed + 20) * 2.3
         }
 
         if (this._jumpKeyPressing) {
@@ -293,7 +293,7 @@ export default class Player extends cc.Component {
         } else if (this._isJumping && !this._maxJumpDistanceReached) {
             const jumpDistance = this.node.y - this._startJumpY;
             //  if jump distance is not maximum
-            if (jumpDistance < this.maxJumpDistance && this.node.y < cc.winSize.height / 2 - 70) {
+            if (jumpDistance < this.maxJumpDistance && this.node.y < cc.winSize.height / 2 - 70 + Globals.yExtra) { // top boumdary
                 //  keep player's Y speed
                 this._rigidBody.linearVelocity = this.jumpSpeed;
             } else {

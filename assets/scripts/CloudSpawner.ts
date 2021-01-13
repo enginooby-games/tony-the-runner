@@ -23,7 +23,7 @@ export default class NewClass extends cc.Component {
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
+    onLoad() {
         this.schedule(function () {
             this.createCloud()
         }, this.spawnInterval, cc.macro.REPEAT_FOREVER, 0.1);
@@ -47,8 +47,10 @@ export default class NewClass extends cc.Component {
         this.randomizeCloud(cloud)
     }
 
-    randomizeCloud(cloud: cc.Node) {
-        const y = Helpers.randomBetween(cc.winSize.height / 2 - cloud.height / 5, cc.winSize.height / 2 - cloud.height / 1.25)
+    randomizeCloud(cloud?: cc.Node) {
+        if (cloud === undefined) return
+        // const y = Helpers.randomBetween(cc.winSize.height / 2 - cloud.height / 5, cc.winSize.height / 2 - cloud.height / 1.25 + Globals.yExtra )
+        const y = Helpers.randomBetween(0, cc.winSize.height / 2 - cloud.height / 1.25) + Globals.yExtra
         const scale = Helpers.randomBetween(0.25, 0.5)
         const opacity = Helpers.randomIntBetween(135, 235)
         cloud.setPosition(cc.winSize.width / 2 + cloud.width / 2, y)
@@ -57,7 +59,7 @@ export default class NewClass extends cc.Component {
     }
 
     start() {
-        
+
     }
 
     update(dt) {

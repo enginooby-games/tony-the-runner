@@ -15,5 +15,6 @@ export enum PlatformShape {
 
 export enum RunnerMode {
     AUTO,
-    MANUAL
+    MANUAL,
+    FREE
 }
