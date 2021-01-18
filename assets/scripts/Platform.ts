@@ -71,13 +71,13 @@ export default class Platform extends cc.Component {
                     tile.setPosition(i * tile.width, (data.tilesCount - 1 - i) * tile.height)
                     this.node.width = TILE_SIZE * data.tilesCount;
                     this.node.height = TILE_SIZE * data.tilesCount;
-                    tile.name = "lastTile"
+                    // tile.name = "lastTile"
                     break;
                 case PlatformShape.DIAGONAL_UP:
                     tile.setPosition(i * tile.width, i * tile.height)
                     this.node.width = TILE_SIZE * data.tilesCount;
                     this.node.height = TILE_SIZE * data.tilesCount;
-                    tile.name = "lastTile"
+                    // tile.name = "lastTile"
                     break;
                 case PlatformShape.ZIC_ZAC:
                     tile.setPosition(i * tile.width, (i % 2) * tile.height)
@@ -87,7 +87,7 @@ export default class Platform extends cc.Component {
             }
 
             this.node.addChild(tile)
-            if (i == data.tilesCount - 1) tile.name = "lastTile"
+            // if (i == data.tilesCount - 1) tile.name = "lastTile"
         }
 
         this.populateTiles(data)

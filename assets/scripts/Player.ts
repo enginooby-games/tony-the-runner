@@ -38,9 +38,6 @@ export default class Player extends cc.Component {
     @property(cc.Node)
     sheildAura: cc.Node = null
 
-    // @property
-    // runnerMode: RunnerMode = RunnerMode.AUTO
-
     _heath: number
     _animation: cc.Animation
     _sprite: cc.Sprite
@@ -62,8 +59,6 @@ export default class Player extends cc.Component {
 
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this)
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this)
-        // this.node.parent.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this)
-        // this.node.parent.on(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this)
 
         const pressOpacity: number = 200
         const releaseOpacity: number = 80
@@ -139,15 +134,6 @@ export default class Player extends cc.Component {
         }
     }
 
-    // onTouchStart() {
-    //     this._jumpKeyPressing = true
-    // }
-
-    // onTouchEnd() {
-    //     this._jumpKeyPressing = false
-    //     this._isJumping = false
-    // }
-
     onBeginContact(contact: cc.PhysicsContact, selfCollider: cc.PhysicsBoxCollider, otherCollider: cc.PhysicsBoxCollider) {
         // TODO: figure out the position of the collision
 
@@ -162,15 +148,11 @@ export default class Player extends cc.Component {
         // if (otherCollider.node.name === 'Spider') {
         //     this._isGrounded = true
         // }
-        this._isGrounded = true
-        // this.node.angle = cc.misc.lerp(this.node.angle, 0, 0.1)
 
     }
 
     onEndContact(contact: cc.PhysicsContact, selfCollider: cc.PhysicsBoxCollider, otherCollider: cc.PhysicsBoxCollider) {
-        if (otherCollider.node.name === 'lastTile') {
-            this._isGrounded = false
-        }
+
     }
 
     _beingDamaged: boolean
@@ -285,14 +267,15 @@ export default class Player extends cc.Component {
 
     update(dt) {
         // this.node.angle = cc.misc.clampf(this.node.angle, -20, 20)
-        if(this._isGrounded){
-            // this._rigidBody.fixedRotation = true
-            // const currentAng = this.node.angle
-            // this.node.angle = cc.misc.lerp(currentAng, 0, 0.2)
-            this.node.angle = 0
-        }
+        // if(this._isGrounded){
+        //     // this._rigidBody.fixedRotation = true
+        //     // const currentAng = this.node.angle
+        //     // this.node.angle = cc.misc.lerp(currentAng, 0, 0.2)
+        //     this.node.angle = 0
+        // }
 
-        if (Globals.runnerMode == RunnerMode.MANUAL) {
+        if (Globals.runnerMode === RunnerMode.MANUAL) {
+            // Helpers.moveChildrentX(this.node, -Globals.speed * dt * 2)
             this.node.x -= Globals.speed * dt * 2
             this.moveSpeed = (Globals.speed + 20) * 2.3
         }
