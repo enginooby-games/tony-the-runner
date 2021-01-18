@@ -172,16 +172,22 @@ export default class Player extends cc.Component {
                 break
             case 'Spike':
                 this._beingDamaged = true
-                this.getDamaged(-1) // kick-off immediately
+                this.getDamaged(1) // kick-off immediately
                 const interval = setInterval(() => {
-                    this.getDamaged(-1);
+                    this.getDamaged(1);
                     if (!this._beingDamaged) {
                         clearInterval(interval)
                     }
                 }, 500);
                 break
+            case 'Bat':
+            case 'Spider':
+                this._beingDamaged = true
+                this.getDamaged(1)
+                this._beingDamaged = false
+                break
             case 'Heart':
-                this.updateHealth(1)
+                this.updateHealth(+1)
                 other.node.destroy()
                 break
             case 'Shield':
@@ -227,11 +233,11 @@ export default class Player extends cc.Component {
         }
     }
 
-    getDamaged(amount: number) {
+    getDamaged(damage: number) {
         if (!this._beingDamaged || this._shieldDuration > 0) return
         const red: cc.Color = new cc.Color(255, 0, 0)
         Helpers.blink(this, red)
-        this.updateHealth(amount)
+        this.updateHealth(-damage)
     }
 
     start() {

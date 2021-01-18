@@ -16,18 +16,24 @@ export default class NewClass extends cc.Component {
     // onLoad () {}
 
     onCollisionEnter(other: cc.Collider, self: cc.Collider) {
-        if (other.node.name === 'Ground')
-            this.player._isGrounded = true
+        this.setIsGrounded(other, true)
     }
 
     onCollisionStay(other: cc.Collider, self: cc.Collider) {
-        if (other.node.name === 'Ground')
-            this.player._isGrounded = true
+        this.setIsGrounded(other, true)
     }
 
     onCollisionExit(other: cc.Collider, self: cc.Collider) {
-        if (other.node.name === 'Ground')
-            this.player._isGrounded = false
+        this.setIsGrounded(other, false)
     }
 
+    setIsGrounded(collider: cc.Collider, enabled: boolean) {
+        switch (collider.node.name) {
+            case 'Ground':
+            case 'Bat':
+            case 'Spider':
+                this.player._isGrounded = enabled
+                break
+        }
+    }
 }
